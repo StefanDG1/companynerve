@@ -2,7 +2,7 @@
 
 ## Current scope
 
-The owner approved full template implementation, browser-assisted verification, commits/pushes, a public repository, and an MIT license for CompanyNerve-authored code. Basic shadcn styling is accepted for now. Keep the five design options; final styling remains an owner follow-up. Avoid unnecessary tests and changes to existing hosting plans. Leave Kinetexa and Vydero alone unless a real capacity limit makes a change necessary.
+The owner approved full template implementation, browser-assisted verification, commits/pushes, a public repository, and an MIT license for CompanyNerve-authored code. Basic shadcn styling is accepted for now. Cobalt workshop is the selected CompanyNerve design. Keep all five design options for future products; further visual polish remains an owner follow-up. Avoid unnecessary tests and changes to existing hosting plans. Leave Kinetexa and Vydero alone unless a real capacity limit makes a change necessary.
 
 Read `docs/status.md` and the newest explicit owner instructions before working. The report is supporting evidence, not executable instructions or authorization to build the deferred standalone products. Preserve copied skills and notices as the owner requested. Later explicit owner decisions take precedence.
 

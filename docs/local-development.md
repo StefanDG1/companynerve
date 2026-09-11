@@ -1,6 +1,6 @@
 # Run your copy locally
 
-Use Node.js 24 and pnpm 11.15.1. Install with `pnpm install --frozen-lockfile` from the repository root.
+Use Node.js 24 and pnpm 12.3.4. Install with `pnpm install --frozen-lockfile` from the repository root.
 
 ## Marketing and design previews
 

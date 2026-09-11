@@ -17,8 +17,8 @@ export default function Page() {
         <section className="section" style={{ marginTop: 50 }}>
           <h2>Our current starting point</h2>
           <p>
-            Cobalt workshop is the provisional default. The other four remain
-            available, and every recipe can be customized for a separate
+            Cobalt workshop is the selected CompanyNerve design. The other four
+            remain available, and every recipe can be customized for a separate
             product.
           </p>
           <p className="muted">

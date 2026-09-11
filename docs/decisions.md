@@ -8,7 +8,7 @@ Current decisions recorded 2026-09-11. These reflect the owner's latest instruct
 | Public repository; MIT for CompanyNerve-authored code                                                  | Owner's later open-source decision                      |
 | Free template, paid services later                                                                     | Owner                                                   |
 | Full implementation, commits/pushes, browser testing and provider setup authorized                     | Owner's later instructions                              |
-| Five design options; basic shadcn-compatible styling now; final selection later                        | Owner                                                   |
+| Cobalt workshop selected; basic shadcn-compatible styling; retain all five recipes                     | Owner                                                   |
 | Keep existing hosting plans and unrelated products                                                     | Owner; no capacity reason to remove anything arose      |
 | Ten selected global skills copied unchanged with supporting files/notices                              | Owner; remaining rights review is the owner's follow-up |
 | Future products have separate repositories, deployments and designs; integrate only after verification | Owner                                                   |
@@ -17,6 +17,6 @@ Current decisions recorded 2026-09-11. These reflect the owner's latest instruct
 
 ## Open owner decisions
 
-Choose the final CompanyNerve design. Choose the first separate product and its customer problem after reviewing the starter. Resolve any unclear third-party skill redistribution rights. Before accepting real customers, establish the product's legal/support identity, retention policy, production environments and any live billing/tax requirements.
+Choose the first separate product and its customer problem after reviewing the starter. Resolve any unclear third-party skill redistribution rights. Before accepting real customers, establish the product's legal/support identity, retention policy, production environments and any live billing/tax requirements.
 
 No further template implementation approval is pending. Future paid services remain outside this repository's current scope.

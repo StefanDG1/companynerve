@@ -1,6 +1,6 @@
 # Verification and release status
 
-Updated 2026-09-11. CompanyNerve is a public alpha template with a live marketing site. Final styling remains open. This record separates implementation from checks actually performed.
+Updated 2026-09-11. CompanyNerve is a public alpha template with a live marketing site. The owner selected Cobalt workshop. This record separates implementation from checks actually performed.
 
 ## Available now
 
@@ -25,11 +25,21 @@ Updated 2026-09-11. CompanyNerve is a public alpha template with a live marketin
 
 Earlier defects found during browser verification were fixed: shared CSS overrode button text colors, account export missed AuthKit proxy coverage, and account deletion attempted provider logout after deleting the identity. Stripe mode display now comes from the backend, and mismatched key/environment configuration is rejected before provider calls.
 
+## Dependency refresh and Cobalt selection
+
+On 2026-09-11 the owner selected Cobalt workshop. Marketing copy, the gallery and planning documents record that choice. The other four recipes remain available.
+
+After upgrading to TypeScript 7.0.2, pnpm 12.3.4 and the versions in [the upgrade notes](upgrading.md), `pnpm check` passed document/skill validation, workspace type checks, all nine backend tests and both production builds. The Convex-specific TypeScript configuration also passed. A new export installed with `--frozen-lockfile`, typechecked and built without credentials. `pnpm -r outdated --format json` returned no outdated direct packages, and `pnpm audit --json` reported zero known vulnerabilities at the time of the check.
+
+Browser checks against local production builds confirmed the selected Cobalt notice, all five gallery links and no horizontal overflow on the gallery/Cobalt preview at desktop and 390-pixel widths. The Cobalt desktop screenshot was reviewed. The starter homepage rendered and its sign-in link reached WorkOS staging. Full authenticated CRUD and Stripe sandbox flows listed above were verified before this dependency refresh and were not repeated for this update.
+
+CI and marketing deployment results are recorded per commit in GitHub checks and the Vercel deployment history. The local results above do not substitute for those hosted checks.
+
 ## Deliberate alpha limits
 
 - The starter is verified locally against hosted development/staging services. There is no public hosted starter demo, production starter database, or live payment offering.
 - Membership invitations are shareable links, not delivered emails. WorkOS owns identity; no WorkOS SSO organization synchronization is included.
-- Visual styling is provisional. Comprehensive accessibility certification, field performance metrics and every browser/recipe/state permutation are not claimed.
+- Cobalt workshop is selected; further visual polish remains possible. Comprehensive accessibility certification, field performance metrics and every browser/recipe/state permutation are not claimed.
 - Backup/restore rehearsal, provider-outage drills, production monitoring, live tax setup and a product-specific retention/legal/support policy remain before real customers. Failed identity deletion jobs require an operator after five retries.
 - Copied skills retain their original contents/notices. The owner deferred resolution of unclear redistribution rights; the MIT license does not relicense third-party material.
 - Future services and standalone products remain separate work. No existing hosting plan or unrelated product was changed.

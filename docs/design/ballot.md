@@ -1,13 +1,13 @@
 # Design ballot
 
-Final choice: **pending**. Provisional implementation: **Cobalt workshop**.
+Selected by the owner on 2026-09-11: **Cobalt workshop**.
 
-Preview all five at `/designs` on the CompanyNerve marketing site. Vote by name in a conversation or PR. No website vote is collected or transmitted.
+Preview all five at `/designs` on the CompanyNerve marketing site. All five remain available as starting points for separate products. No website vote is collected or transmitted.
 
-- [ ] Cobalt workshop
+- [x] Cobalt workshop
 - [ ] Quiet studio
 - [ ] Signal room
 - [ ] Open garden
 - [ ] Field notes
 
-Record what you like about the layout, typography, density, and color separately. The other four remain starter recipes even after CompanyNerve's marketing direction is selected. The owner explicitly expects to refine the styling later.
+Cobalt is CompanyNerve's marketing direction. Further typography and layout refinements can follow without removing the other four starter recipes.

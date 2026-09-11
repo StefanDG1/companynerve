@@ -10,25 +10,25 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "next": "16.3.4",
-    "react": "19.2.8",
-    "react-dom": "19.2.8",
     "@companynerve/company-config": "workspace:*",
     "@companynerve/design-recipes": "workspace:*",
     "@companynerve/ui": "workspace:*",
-    "lucide-react": "0.577.0",
     "@workos-inc/authkit-nextjs": "4.3.1",
-    "@workos-inc/node": "10.7.0",
+    "@workos-inc/node": "10.13.0",
     "convex": "1.45.0",
-    "stripe": "22.6.1",
-    "zod": "4.5.4"
+    "lucide-react": "1.44.0",
+    "next": "16.3.4",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "stripe": "22.6.2",
+    "zod": "4.6.1"
   },
   "devDependencies": {
-    "@types/node": "24.13.3",
-    "@types/react": "19.2.14",
-    "@types/react-dom": "19.2.3",
-    "typescript": "5.9.3",
-    "tailwindcss": "4.2.1",
-    "@tailwindcss/postcss": "4.2.1"
+    "@tailwindcss/postcss": "4.3.3",
+    "@types/node": "24.13.4",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "tailwindcss": "4.3.3",
+    "typescript": "7.0.2"
   }
 }

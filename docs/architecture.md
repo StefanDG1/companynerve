@@ -21,9 +21,9 @@ Stripe calls the Convex HTTP webhook. A verified event triggers a fresh Stripe r
 
 ## Stack
 
-Node 24, pinned pnpm 11.15.1, Next.js 16.3.4, React 19.2.8, strict TypeScript, Tailwind, Zod, Convex 1.45, WorkOS AuthKit, and Stripe. Exact SDK versions live in the manifests and lockfile. A pnpm workspace is sufficient; no Turborepo layer is needed for this size.
+Node 24, pinned pnpm 12.3.4, Next.js 16.3.4, React 19.3.0, strict TypeScript 7.0.2, Tailwind 4.3.3, Zod, Convex 1.45, WorkOS AuthKit, and Stripe. Exact SDK versions live in the manifests and lockfile. A pnpm workspace is sufficient; no Turborepo layer is needed for this size.
 
-Shared UI uses local source, native selects, and system fonts. The five recipes change density, typography and composition as well as colors. Styling remains provisional pending the owner's selection. Email delivery, uploads, telemetry, and generalized plugins are absent because no shipped journey needs them.
+Shared UI uses local source, native selects, and system fonts. The five recipes change density, typography and composition as well as colors. The owner selected Cobalt workshop for CompanyNerve; future products choose their own recipe. Email delivery, uploads, telemetry, and generalized plugins are absent because no shipped journey needs them.
 
 ## Distribution
 

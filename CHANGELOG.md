@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Select Cobalt workshop for CompanyNerve and identify it in the gallery. Keep all five recipes for exported products.
+- Upgrade to TypeScript 7.0.2, pnpm 12.3.4 and current compatible stable dependencies. See `docs/upgrading.md` for versions and compiler compatibility.
+
 ## 0.1.0-alpha.1 — 2026-09-11
 
 - Public MIT CompanyNerve source and GitHub template, with separate marketing and starter apps.

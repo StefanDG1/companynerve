@@ -6,7 +6,7 @@ The template implementation is authorized and present. [Status](status.md) disti
 | ----------------------- | --------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
 | Research and boundaries | Report analysis and commit-specific repository review; future products excluded         | Revisit only when selecting the next standalone product                       |
 | Starter                 | Identity, organizations, roles, projects, invitations, exports/deletion, Stripe example | Complete provider-specific acceptance before real customers                   |
-| Design                  | Five landing previews and shared application recipes                                    | Owner votes, then refine visual identity                                      |
+| Design                  | Five landing previews and shared application recipes                                    | Cobalt selected; refine visual identity as needed                             |
 | Distribution            | Public MIT source, GitHub template flag, exporter, pinned dependencies, CI, skills      | Publish versioned prereleases with explicit verification limits               |
 | Marketing               | Buildable independent website, docs, design gallery, repository CTA                     | Verify custom domain and final copy                                           |
 | Operations              | Setup and environment runbooks                                                          | Record hosted evidence, restore exercise and live billing decision separately |
@@ -17,4 +17,4 @@ After the owner reviews the template, choose one validated customer problem. Lau
 
 ## Remaining design work
 
-Cobalt workshop is provisional. Compare Cobalt workshop, Quiet studio, Signal room, Open garden, and Field notes at `/designs`. A vote picks the CompanyNerve marketing identity; all five remain available to new products. Replace illustrative preview content with actual product screenshots when final styling is chosen.
+Cobalt workshop is selected for CompanyNerve. Cobalt workshop, Quiet studio, Signal room, Open garden, and Field notes remain available at `/designs` for new products. Later polish can refine typography and replace illustrative preview content with actual product screenshots.

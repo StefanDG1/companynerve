@@ -8,7 +8,7 @@ Read [status](status.md) for actual verification and provider setup, then [local
 
 ## Your next decisions
 
-Choose a design at the website's `/designs` gallery. Cobalt workshop is the temporary default. Styling can change without changing authorization, billing or data boundaries.
+You selected Cobalt workshop for CompanyNerve. All five designs remain in the website's `/designs` gallery for future products. Styling can change without changing authorization, billing or data boundaries.
 
 Before real customers, finish any hosted verification listed as outstanding, choose your own support/legal contact details and retention policy, and decide whether the product needs live subscriptions. The template is not a paid CompanyNerve offering.
 

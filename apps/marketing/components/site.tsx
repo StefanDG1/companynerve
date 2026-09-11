@@ -116,6 +116,9 @@ export function RecipeGallery() {
           </div>
           <div className="recipe-meta">
             <strong>{r.name}</strong>
+            {r.id === "cobalt" && (
+              <span className="badge">CompanyNerve design</span>
+            )}
             <span className="muted">{r.audience}</span>
           </div>
         </Link>
@@ -142,7 +145,10 @@ export function Landing({
     >
       {concept && (
         <div className="notice">
-          Design option: {r.name}. Final styling is still open.{" "}
+          Design option: {r.name}.{" "}
+          {r.id === "cobalt"
+            ? "Selected for CompanyNerve."
+            : "Available for your next product."}{" "}
           <Link href="/designs">Compare all five</Link>
         </div>
       )}
@@ -312,9 +318,9 @@ export function Landing({
             <details>
               <summary>Is this a finished visual design?</summary>
               <p>
-                This early release uses basic shadcn-compatible styling. The
-                five landing-page options remain available while the final
-                design is refined.
+                CompanyNerve uses Cobalt workshop with basic shadcn-compatible
+                styling. All five recipes remain available for your products,
+                and you can refine the typography and layout as you build.
               </p>
             </details>
           </section>

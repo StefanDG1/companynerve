@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "license": "MIT",
-  "packageManager": "pnpm@11.15.1",
+  "packageManager": "pnpm@12.3.4",
   "engines": {
     "node": "24.x"
   },
@@ -22,18 +22,18 @@
     "setup:local": "node scripts/setup-local.mjs"
   },
   "dependencies": {
-    "@workos-inc/node": "10.7.0",
+    "@workos-inc/node": "10.13.0",
     "convex": "1.45.0",
-    "stripe": "22.6.1",
-    "zod": "4.5.4"
+    "stripe": "22.6.2",
+    "zod": "4.6.1"
   },
   "devDependencies": {
     "@edge-runtime/vm": "5.0.0",
-    "@types/node": "24.13.3",
-    "convex-test": "0.0.56",
-    "prettier": "3.8.3",
-    "typescript": "5.9.3",
-    "vite": "8.0.3",
+    "@types/node": "24.13.4",
+    "convex-test": "0.0.57",
+    "prettier": "3.9.6",
+    "typescript": "7.0.2",
+    "vite": "8.2.2",
     "vitest": "5.0.0"
   }
 }

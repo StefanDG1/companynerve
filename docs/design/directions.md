@@ -1,6 +1,6 @@
 # Five design directions
 
-The owner approved basic shadcn styling for implementation and will choose/refine the final style later. Cobalt workshop is the provisional default. All five directions are available in the marketing `/designs` gallery and the starter's `/recipes` page.
+The owner selected Cobalt workshop on 2026-09-11. It uses the approved basic shadcn-compatible styling. All five directions are available in the marketing `/designs` gallery and the starter's `/recipes` page.
 
 | Recipe          | Palette                                             | Type                        | Composition and fit                                                                 |
 | --------------- | --------------------------------------------------- | --------------------------- | ----------------------------------------------------------------------------------- |
@@ -10,6 +10,6 @@ The owner approved basic shadcn styling for implementation and will choose/refin
 | Open garden     | Green #236854, soft green #f3f8f3, white            | Trebuchet/system sans       | Spacious introduction, softer corners, staggered features; education/community      |
 | Field notes     | Plum #763c68, paper #fbf9fc, dark text #322639      | Georgia headings, sans body | Asymmetric editorial title and chapter-like content; research/professional services |
 
-Each recipe supplies semantic colors, radius, typography, density, and layout variation. Shared inputs/buttons use the same access and state behavior. Core forms, tables, cards, empty states, errors, loading, and focus styling inherit the recipe. System fonts avoid external font requests; final font selection can follow the design vote.
+Each recipe supplies semantic colors, radius, typography, density, and layout variation. Shared inputs/buttons use the same access and state behavior. Core forms, tables, cards, empty states, errors, loading, and focus styling inherit the recipe. System fonts avoid external font requests; font changes can be made during later visual refinement.
 
 These are original starting directions, not claims that one palette suits every product. Each future product owns its identity. Avoid adding fabricated customer logos, statistics, or endorsements to the preview.

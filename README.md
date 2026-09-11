@@ -23,7 +23,7 @@ Open http://localhost:3000 for the website and five design options. Follow [loca
 - WorkOS sign-in and verified-user provisioning.
 - Convex organizations, roles, invitations, projects, audit records, exports, and deletion.
 - Stripe checkout/portal, verified webhook processing, entitlement refresh, and a protected sample report.
-- Five shared design recipes. Cobalt workshop is provisional; the owner will refine the final style later.
+- Five shared design recipes. Cobalt workshop is the selected CompanyNerve design; all five remain available for new products.
 - Documentation, ten local coding skills, a starter export command, and focused backend tests.
 
 ```sh
