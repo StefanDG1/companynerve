@@ -22,7 +22,7 @@
     "setup:local": "node scripts/setup-local.mjs"
   },
   "dependencies": {
-    "@workos-inc/node": "10.7.0",
+    "@workos-inc/node": "10.13.0",
     "convex": "1.45.0",
     "stripe": "22.6.1",
     "zod": "4.5.4"
@@ -31,9 +31,9 @@
     "@edge-runtime/vm": "5.0.0",
     "@types/node": "24.13.3",
     "convex-test": "0.0.56",
-    "prettier": "3.8.3",
+    "prettier": "3.9.6",
     "typescript": "5.9.3",
-    "vite": "8.0.3",
+    "vite": "8.2.2",
     "vitest": "5.0.0"
   }
 }
