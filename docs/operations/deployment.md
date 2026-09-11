@@ -4,7 +4,7 @@
 
 The public marketing app is the Vercel project `companynerve-marketing`, rooted at `apps/marketing`, in the existing `stefandg1s-projects` team. The first successful deployment used commit `c28177a`. Git pushes to main trigger deployment. Marketing has no Convex, WorkOS or Stripe credentials. The existing Hobby plan was preserved; no unrelated project was removed.
 
-The local starter still uses dedicated development/staging services and Stripe sandbox resources. A separate production backend `gregarious-panda-197` and Vercel project `companynerve-app`, rooted at `apps/starter`, now exist. WorkOS production has email/password and Google enabled. Production application variables are scoped to Production only. The intended application domain is `app.companynerve.com`; its DNS and authenticated browser verification are pending. There is no live paid offering. See [launch operations](launch.md) and [status](../status.md) for the remaining checks.
+The local starter still uses dedicated development/staging services and Stripe sandbox resources. A separate production backend `gregarious-panda-197` and Vercel project `companynerve-app`, rooted at `apps/starter`, now exist. WorkOS production has email/password and Google enabled. Production application variables are scoped to Production only. The intended application domain is `app.companynerve.com`; its DNS is configured; authenticated browser verification is recorded separately in status. There is no live paid offering. See [launch operations](launch.md) and [status](../status.md) for the remaining checks.
 
 ## Domain record and rollback
 
@@ -41,3 +41,5 @@ Account deletion retains organization-authored content and audit references. Org
 ## Repository operations
 
 The source is public, MIT for authored material, and enabled as a GitHub template. Private vulnerability reporting is enabled. CI uses read-only repository permissions and pinned action revisions. See [upgrading](../upgrading.md) before applying template changes to an existing product.
+
+The `app` CNAME points to `81207fe880e8d647.vercel-dns-017.com.`. A separate Google Search Console verification TXT is present at `@`. These additions preserve the apex/www and mail records above. The domain remains on Namecheap nameservers; Vercel supplies the app hosting target.

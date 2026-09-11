@@ -28,4 +28,4 @@ The application is not an SEO destination. Keep authenticated routes out of the 
 
 ## CompanyNerve setup status
 
-On 2026-09-11 a Domain property for `companynerve.com` was started in the owner's account. DNS verification and sitemap submission remain pending Namecheap access. This document does not claim the property is verified or the site is indexed. See [status](../status.md) for subsequent verification evidence.
+On 2026-09-11 Google Search Console confirmed verified ownership of the `companynerve.com` Domain property. The submitted `https://companynerve.com/sitemap.xml` reported Success and four discovered pages. Search performance and indexing reports were still processing. This does not claim that those pages are indexed. See [status](../status.md) for subsequent verification evidence.

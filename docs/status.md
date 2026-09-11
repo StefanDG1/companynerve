@@ -61,3 +61,9 @@ Source work adds shared product website export, configuration-driven branding, o
 The updated Convex production functions deployed successfully. Its health route returned 200, an unsigned Stripe webhook returned 400, and an unauthenticated identity action returned an error. No authenticated production journey is claimed. The working source passed a scan against the actual configured secret values. GitHub reported no open pull requests.
 
 The website/application source changes are prepared on `production-launch` while DNS access is pending. They are not yet promoted to the public marketing site, so the live homepage does not advertise signup on an unresolved app domain.
+
+## Domain and Search Console verification
+
+After the owner signed in to Namecheap, `app` was added as a CNAME to the exact Vercel target, and the Search Console TXT was added at the apex. Existing website and email records were preserved. Authoritative DNS returns both records. Vercel reports Valid Configuration and HTTPS returned 200 using the public resolved target without bypassing certificate verification. This computer's default recursive resolver initially retained NXDOMAIN; browser checks wait for that cache to update.
+
+Search Console confirms verified ownership of the Domain property. Sitemap submission reported Success with four discovered pages. Index/performance reports are processing; no search ranking or indexed-page count is claimed. The prepared source is being promoted to main now that the domain is configured. Authenticated production verification remains separate.

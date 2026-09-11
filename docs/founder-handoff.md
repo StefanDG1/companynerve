@@ -16,4 +16,4 @@ Use the [plan](plan.md) to choose a separate product after reviewing the starter
 
 ## Current account action
 
-Sign in to Namecheap to finish the app subdomain and Google Search Console TXT record. Production backend and identity-provider setup exist, but authenticated production verification and Search Console ownership remain pending. Google Cloud OAuth setup is separate from Search Console. See [launch operations](operations/launch.md).
+The app subdomain and Search Console TXT record are saved. Vercel reports valid domain configuration; Search Console confirms verified ownership and a successful sitemap submission. Authenticated production verification is the remaining launch check. Google Cloud OAuth setup is separate from Search Console. See [launch operations](operations/launch.md).
