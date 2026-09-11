@@ -8,6 +8,7 @@ export const authorize = query({
     return {
       name: a.organization.name,
       email: a.actor.email,
+      mode: process.env.STRIPE_MODE === "live" ? "live" : "test",
       billing: await billingFor(ctx, organizationId),
     };
   },

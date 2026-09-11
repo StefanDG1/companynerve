@@ -37,7 +37,7 @@ export default async function Page({
               : "Upgrade to enable the project report and a higher project limit."}
           </p>
           <p className="muted">
-            {process.env.BILLING_MODE === "live"
+            {data.mode === "live"
               ? "Live billing is enabled for this product."
               : "Test billing. No real payment is required."}{" "}
             Price and currency appear on the provider's checkout page.

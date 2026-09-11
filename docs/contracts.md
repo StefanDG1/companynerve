@@ -1,61 +1,33 @@
-# Proposed domain contracts
+# Runtime contracts
 
-The runtime schema lives in `convex/schema.ts`; company settings live in `packages/company-config/index.ts`. Some extension shapes below remain future design specifications. ADR 0002 supersedes the initial membership-projection design: application memberships live in Convex, and no WorkOS organization sync is implemented.
+The source of truth is `convex/schema.ts` and `packages/company-config/index.ts`. This document describes the shipped starter, not a future extension engine.
 
 ## Company configuration
 
-| Field           | Shape and validation                                               | Consumer                                   |
-| --------------- | ------------------------------------------------------------------ | ------------------------------------------ |
-| `schemaVersion` | Literal version, initially 1; reject unknown versions              | Config loader                              |
-| `product`       | Stable slug, display name, canonical URL; HTTPS for production     | Brand and route metadata                   |
-| `roles`         | Unique owner/admin/member identifiers                              | Server permission policy and membership UI |
-| `entitlements`  | Named capabilities, separate from role permissions                 | Billing policy and server feature checks   |
-| `plans`         | Stable IDs, entitlement IDs, nonnegative limits; no live price IDs | Plan policy and test fixtures              |
-| `resources`     | Stable IDs, owner type, data classification, permitted actions     | Backend implementation guide and tests     |
-| `journeys`      | IDs and descriptions linked to actual test files                   | Release checklist                          |
-| `invariants`    | IDs, human-readable rules, responsible test IDs                    | Traceability, not automatic proof          |
-| `brandRecipe`   | One of the five shipped recipe IDs                                 | Presentation layer                         |
+`defineCompany` validates schemaVersion 1, a product slug/name/description, one of five recipe IDs, the owner/admin/member role tuple, and Free/Pro project limits between 1 and 100. The default limits are 3 and 100. Configuration has no provider keys or price IDs. Entitlement checks are backend logic; the separate `invariants` list points to behavioral tests and is not automatic proof.
 
-Reject duplicate IDs and references to missing roles, plans, or entitlements. Keep provider keys and environment-specific Stripe price IDs outside this configuration. A role answers who may act; an entitlement answers which purchased capability is available. Neither replaces the other.
+## Identity and tenancy
 
-## Tenancy and data
+WorkOS owns identity. Convex owns organizations, current memberships, and invitations. A verified WorkOS subject is resolved to a verified email through the WorkOS API before profile synchronization. Deleting users cannot bootstrap again while their deletion is pending.
 
-| Entity                   | Minimum fields and constraints                                                                                       |
-| ------------------------ | -------------------------------------------------------------------------------------------------------------------- |
-| User                     | Internal ID, unique WorkOS subject, active/suspended/deleting state                                                  |
-| Organization             | Internal ID, unique WorkOS organization ID, display name, lifecycle state                                            |
-| Membership projection    | Organization ID, user ID, role, active/revoked state, provider event/version metadata; unique pair                   |
-| Project                  | ID, organization ID, name, creator ID, timestamps; index by organization                                             |
-| Billing account          | Organization ID, unique Stripe customer/subscription IDs, status, plan ID, period boundary, synchronization metadata |
-| Processed provider event | Provider, environment, event ID, processing state; unique composite key                                              |
-| Audit event              | Organization, actor, action, target, outcome, timestamp, correlation ID; no secret payload                           |
+Every organization operation checks the authenticated user, current membership, organization lifecycle, and required role. Record-by-ID operations also verify the record's organization. Removing membership denies the next database operation, including requests with an existing identity token. There is no WorkOS organization projection or eventual membership propagation window.
 
-WorkOS owns identity and membership lifecycle. A server projection can support queries, but stale membership cannot authorize a sensitive action indefinitely. Define and test the maximum propagation window during implementation. Require a provider refresh or reject a sensitive operation when that guarantee cannot be met.
+Owners manage roles, billing, exports, and organization deletion. Admins manage projects and invite members. Members read projects. Owners may invite admins. Invitations are bound to a verified email, store a token hash, expire after seven days, and are consumed once. The UI provides a shareable link; no invitation email is sent. A workspace supports at most 50 members and a user at most ten organizations. Final-owner removal and account deletion without ownership transfer are rejected.
 
-Derive the acting user from a verified token. Match the requested active organization to a current membership. Check organization ownership when reading a record by ID, writing it, listing it, exporting it, or requesting a file URL. Check role, entitlement, lifecycle state, and limits independently. Never select the first organization silently.
+## Data and deletion
 
-Personal products can start with a one-person organization. This avoids maintaining a second authorization system. Do not infer organization membership from an email domain.
+Tables include users, organizations, memberships, projects, invitations, billing, processed billing events, audit records, rate limits, and identity-deletion jobs. Internal Convex IDs are organization keys; there is no WorkOS organization ID requirement.
 
-## Billing boundary
+Organization export contains that organization's name and project data. Account export contains profile and membership information. Organization deletion requires a matching name and no active billing obligation, locks access immediately, and purges organization-owned tables in batches. Account deletion requires a matching email and no sole ownership; it removes memberships and schedules WorkOS deletion with five attempts. Failed jobs remain for an operator to inspect. Organization audit references and authored content are not automatically erased by an individual account deletion. See [operations](operations/deployment.md).
 
-Stripe is the authoritative source of billing state. Phase one chooses either a direct Stripe-to-Convex entitlement projection or WorkOS-managed entitlement sync. Do not run two independent authorization authorities for the same capability.
+## Billing
 
-Verify raw webhook bodies and signatures. Separate test/live event handling. Make processing idempotent and recoverable after partial failure. Old events must not roll current access backward or restore canceled access. Success-page navigation cannot grant paid access. Test the cancellation boundary, failed payment policy, refresh/reconciliation, and environment mismatch.
+Stripe is authoritative. Convex stores one projection per organization. Only active/trialing state with an unexpired paid period and verification within 24 hours grants Pro access. Hourly reconciliation and owner-triggered refresh recover missed events. Each customer refresh reserves a revision; an older completion cannot overwrite a newer applied revision.
 
-## Future product integration
+The HTTP handler verifies Stripe's raw-body signature and test/live mode. Supported events refresh current Stripe state rather than trusting event payloads. Event IDs are deduplicated. Checkout return parameters grant no access. Checkout/customer creation uses idempotency keys, and pending subscriptions lead to the portal rather than another purchase.
 
-A future adapter manifest describes `id`, `version`, `supportedTemplateRange`, `supportedContractVersions`, capabilities, required permissions, supported environments, setup instructions, and disconnect behavior. It also identifies the repository, released artifact, and verification evidence.
+The sample paid feature is a project report and a higher project quota. CompanyNerve itself is free and has no live checkout.
 
-Adapters call supported APIs or install a narrow package; they do not import an entire sibling repository. A disabled or absent adapter cannot affect the base signup and product journey. No runtime loading of arbitrary code from untrusted URLs.
+## Future integrations
 
-## Evidence for later integrations
-
-Reserve a result shape with a schema version, check ID, adapter version, template version, commit/deployment ID, organization/environment, start/end timestamps, expected and observed outcomes, and redacted artifact references. Outcomes include pass, fail, skipped, error, and unknown. Skipped or unknown must not appear as pass.
-
-Record synthetic examples as examples. Retention, storage encryption, access controls, and deletion requirements are part of any future hosted evidence product. There is no central evidence warehouse in the starter.
-
-## Connector and action boundaries
-
-Document each provider's purpose, credential owner, minimum scopes, environment, supported reads/writes, revocation, and health check. Use provider consoles to hold secrets. The first template does not store customers' third-party credentials.
-
-Future actions need an actor, organization, environment, capability, target, preview, idempotency key, and audit outcome. Production writes, purchases, bulk sends, and deletion require explicit policy and authorization. This is an integration requirement for a future service, not an implemented agent approval engine.
+No adapter runtime, central evidence warehouse, connector credential vault, or autonomous action engine is included. A later integration must identify its released version, compatible template versions, required permissions, environment separation, setup/disconnect behavior, and verification evidence. It must fail safely when disabled. See [future products](future-products.md).

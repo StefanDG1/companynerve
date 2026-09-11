@@ -311,6 +311,11 @@ describe("billing enforcement", () => {
         })
       ).status,
     ).toBe(400);
+    process.env.STRIPE_SECRET_KEY = "sk_live_synthetic_fixture";
+    await expect(
+      t.action(internal.payments.webhook, { body, signature }),
+    ).rejects.toThrow("environment do not match");
+    process.env.STRIPE_SECRET_KEY = "sk_test_synthetic_fixture";
     const live = body.replace('"livemode":false', '"livemode":true');
     const liveSignature = Stripe.webhooks.generateTestHeaderString({
       payload: live,
@@ -324,5 +329,43 @@ describe("billing enforcement", () => {
         })
       ).status,
     ).toBe(400);
+  });
+  it("cleans expired records behind active ones without removing current records", async () => {
+    const { t, a } = await fixture();
+    await t.run(async (ctx) => {
+      for (let i = 0; i < 205; i++)
+        await ctx.db.insert("limits", {
+          key: `current:${i}`,
+          window: Math.floor(Date.now() / 60000),
+          count: 1,
+        });
+      await ctx.db.insert("limits", { key: "expired", window: 0, count: 1 });
+      await ctx.db.insert("events", { eventId: "old", processedAt: 0 });
+      await ctx.db.insert("events", {
+        eventId: "current",
+        processedAt: Date.now(),
+      });
+      const org = await ctx.db.get(a);
+      await ctx.db.insert("invitations", {
+        organizationId: a,
+        email: "expired@example.test",
+        role: "member",
+        tokenHash: "expired-token",
+        expiresAt: 0,
+        createdBy: org!.createdBy,
+      });
+    });
+    await t.mutation(internal.maintenance.cleanup, {});
+    await t.run(async (ctx) => {
+      const limits = await ctx.db.query("limits").collect();
+      expect(limits.filter((x) => x.key.startsWith("current:"))).toHaveLength(
+        205,
+      );
+      expect(limits.some((x) => x.key === "expired")).toBe(false);
+      expect(
+        (await ctx.db.query("events").collect()).map((x) => x.eventId),
+      ).toEqual(["current"]);
+      expect(await ctx.db.query("invitations").collect()).toHaveLength(0);
+    });
   });
 });

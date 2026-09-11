@@ -8,7 +8,7 @@ The primary user is an independent founder or a small team using coding agents a
 
 The approved implementation should deliver a minimal example product with one organization-owned resource, such as a project. It includes account creation and sign-in, organization creation and switching, invitation and membership management, owner/admin/member permissions, an account page, and a Stripe sandbox subscription flow. The sample resource exists to demonstrate how to add real product logic. It is not LaunchProof or another future product.
 
-Company and brand configuration hold the product name, routes, roles, entitlement identifiers, limits, data classifications, and chosen design recipe. Secrets never belong in these files. Important permissions still run on the backend; configuration is not proof of enforcement.
+Company configuration holds the product name/description, fixed roles, plan limits, and chosen design recipe. Other authorization rules live in backend functions. Secrets never belong in these files. Important permissions still run on the backend; configuration is not proof of enforcement.
 
 Five design recipes cover marketing and common application states. Each recipe defines layout, density, type, color roles, forms, tables, navigation, empty states, and motion. A new product chooses a recipe and customizes its identity without taking CompanyNerve's marketing page or logo.
 

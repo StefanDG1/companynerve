@@ -37,13 +37,27 @@ export const purgeOrganization = internalMutation({
 export const cleanup = internalMutation({
   args: {},
   handler: async (ctx) => {
-    for (const row of await ctx.db.query("events").take(200)) {
-      if (row.processedAt < Date.now() - 30 * 86400000)
-        await ctx.db.delete(row._id);
-    }
-    for (const row of await ctx.db.query("limits").take(200)) {
-      if (row.window < Math.floor(Date.now() / 60000) - 60)
-        await ctx.db.delete(row._id);
-    }
+    const batches = await Promise.all([
+      ctx.db
+        .query("events")
+        .withIndex("by_processed", (q) =>
+          q.lt("processedAt", Date.now() - 30 * 86400000),
+        )
+        .take(200),
+      ctx.db
+        .query("limits")
+        .withIndex("by_window", (q) =>
+          q.lt("window", Math.floor(Date.now() / 60000) - 60),
+        )
+        .take(200),
+      ctx.db
+        .query("invitations")
+        .withIndex("by_expiry", (q) => q.lt("expiresAt", Date.now()))
+        .take(200),
+    ]);
+    for (const rows of batches)
+      for (const row of rows) await ctx.db.delete(row._id);
+    if (batches.some((rows) => rows.length === 200))
+      await ctx.scheduler.runAfter(0, internal.maintenance.cleanup, {});
   },
 });

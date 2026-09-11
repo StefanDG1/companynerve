@@ -11,19 +11,14 @@ export default function proxy(request: NextRequest, event: NextFetchEvent) {
     !process.env.WORKOS_API_KEY ||
     !process.env.WORKOS_COOKIE_PASSWORD
   ) {
-    if (
-      request.nextUrl.pathname.startsWith("/app") ||
-      ["/sign-in", "/sign-up", "/callback"].includes(request.nextUrl.pathname)
-    )
-      return NextResponse.redirect(new URL("/setup", request.url));
-    return NextResponse.next();
+    return NextResponse.redirect(new URL("/setup", request.url));
   }
   return auth(request, event);
 }
 export const config = {
   matcher: [
     "/app/:path*",
-    "/account",
+    "/account/:path*",
     "/join/:path*",
     "/sign-in",
     "/sign-up",

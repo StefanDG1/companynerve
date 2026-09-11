@@ -1,68 +1,32 @@
 # Architecture
 
-The template serves two related purposes: the CompanyNerve website explains the free template, and the starter demonstrates how a founder builds their own SaaS. Keep their product content and deployments separate.
-
-## Structure after approval
-
-The implementation uses these boundaries:
+CompanyNerve has a public marketing site and a separate SaaS starter. Marketing builds without backend credentials. The starter uses server-rendered Next.js pages and server actions, with Convex enforcing data access.
 
 ```text
-apps/
-  marketing/           CompanyNerve website at companynerve.com
-  starter/             Example SaaS and authenticated application
-convex/                Starter backend and authorization
-packages/
-  company-config/      Validated roles, plans, resources, and journeys
-  design-recipes/      Five token sets and layout recipes
-docs/                  Founder setup, architecture, operations, and evidence
-.agents/skills/        Versioned coding guidance
+apps/marketing          CompanyNerve website and five landing previews
+apps/starter            Example SaaS, workspace UI, account and billing
+convex                  Data, identity bootstrap, authorization, billing, jobs
+packages/company-config Validated brand, roles and plan limits
+packages/design-recipes Five presentation recipes and shared styles
+packages/ui             Small Radix/CVA, shadcn-compatible primitives
+docs                    Setup, operating instructions, decisions and evidence
+.agents/skills          Ten unchanged skill snapshots
 ```
 
-Start with pnpm workspaces. Add a build orchestrator only if measured build duplication warrants it. Keep starter-specific UI in the starter until sharing is real. Marketing should build without WorkOS, Convex, or Stripe secrets.
+## Request flow
 
-## Request and trust flow
+WorkOS AuthKit handles sign-in and encrypted sessions. The Next.js server retrieves the user's access token and calls Convex through a request-scoped client. Convex checks the identity and current application membership for each operation. The browser cannot grant roles or paid access.
 
-```mermaid
-flowchart LR
-  Visitor --> Marketing[CompanyNerve marketing site]
-  Founder --> Starter[Starter Next.js app]
-  Starter --> WorkOS[WorkOS identity]
-  Starter --> Backend[Convex authorized functions]
-  Backend --> Records[Organization-scoped records]
-  Stripe[Stripe billing] --> Webhook[Verified webhook handler]
-  Webhook --> Billing[Server entitlement projection]
-  Billing --> Backend
-```
+Stripe calls the Convex HTTP webhook. A verified event triggers a fresh Stripe read; the resulting entitlement projection is versioned and expires conservatively. See [contracts](contracts.md) and [membership decision](adr/0002-application-memberships.md).
 
-This diagram is the proposed direct-Stripe projection path. The phase-one integration spike can replace it with WorkOS entitlement synchronization if revocation and refresh semantics meet the acceptance criteria. Record that choice once, then implement one authority.
+## Stack
 
-## Proposed stack
+Node 24, pinned pnpm 11.15.1, Next.js 16.3.4, React 19.2.8, strict TypeScript, Tailwind, Zod, Convex 1.45, WorkOS AuthKit, and Stripe. Exact SDK versions live in the manifests and lockfile. A pnpm workspace is sufficient; no Turborepo layer is needed for this size.
 
-| Concern      | Initial choice                                        | Why                                                        |
-| ------------ | ----------------------------------------------------- | ---------------------------------------------------------- |
-| Runtime      | Node 24                                               | Matches the existing local toolchain and Vydero's baseline |
-| Dependencies | pnpm workspaces, one exact version and lockfile       | Reproducible installs without a large build platform       |
-| Web          | Next.js App Router, React, strict TypeScript          | Existing experience and provider integration support       |
-| UI           | Tailwind and selected shadcn primitives               | Own component source and customize actual layouts          |
-| Data         | Convex                                                | Transactions, reactive data, and server-side authorization |
-| Identity     | WorkOS AuthKit                                        | Identity and organization integration                      |
-| Billing      | Stripe in test mode first                             | Checkout, subscription management, and event integration   |
-| Validation   | Zod at external/config boundaries                     | Detect malformed inputs before business logic              |
-| Verification | Vitest, convex-test, Playwright, accessibility checks | Deterministic boundary tests and critical browser journeys |
-| Hosting      | Separate Vercel marketing and starter projects        | Avoid coupling website availability to the demo backend    |
+Shared UI uses local source, native selects, and system fonts. The five recipes change density, typography and composition as well as colors. Styling remains provisional pending the owner's selection. Email delivery, uploads, telemetry, and generalized plugins are absent because no shipped journey needs them.
 
-Verify compatible package versions and provider instructions in phase one. Do not freeze the report's versions in this planning repository. Add telemetry, mail, and object storage only when a shipped feature needs them. Prefer Convex storage for the first small example attachment if one is required; large artifact storage is deferred.
+## Distribution
 
-## Template distribution and updates
+`pnpm template:export -- --name my-product --out ../my-product` copies the starter, backend, packages, documentation, tests, skills, and a reproducible lockfile. It omits marketing, local environment values, Git history, build output, and provider metadata. The exported product needs its own provider projects.
 
-The implementation needs an export or documented copy path that includes the starter, backend, chosen recipe, required packages, docs, and relevant skills. It must omit CompanyNerve-only marketing, project IDs, secrets, and deployment metadata. Verify the exported result in a fresh directory before a release.
-
-Use tagged template releases and explicit migration notes. Founders own their copies. Do not overwrite customized products during updates. A template-version marker and changed-file guide are enough initially; a merge/update CLI is deferred.
-
-See [domain contracts](contracts.md), [architecture decisions](adr/0001-template-boundaries.md), and [acceptance criteria](acceptance.md).
-
-## Implemented authority decisions
-
-ADR 0002 supersedes the earlier membership proposal. WorkOS owns identity; Convex owns application organizations, invitations, and roles. Current membership is checked in every database operation. Stripe is the billing authority, with a single Convex entitlement projection. No WorkOS organization synchronization or generalized extension runtime is implemented.
-
-The shared `packages/ui` contains small Radix/CVA-based, shadcn-compatible primitives. Native selects preserve keyboard behavior. Both apps consume shared recipe CSS. CompanyNerve uses system fonts while the final design remains open.
+Founders own their copies. Updates are explicit diffs and migrations, never overwrites of customized applications. The version marker records the source release; see [upgrade guide](upgrading.md).

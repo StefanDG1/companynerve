@@ -44,7 +44,8 @@ export default defineSchema({
     createdBy: v.id("users"),
   })
     .index("by_hash", ["tokenHash"])
-    .index("by_org", ["organizationId"]),
+    .index("by_org", ["organizationId"])
+    .index("by_expiry", ["expiresAt"]),
   billing: defineTable({
     organizationId: v.id("organizations"),
     customerId: v.string(),
@@ -59,10 +60,9 @@ export default defineSchema({
   })
     .index("by_org", ["organizationId"])
     .index("by_customer", ["customerId"]),
-  events: defineTable({ eventId: v.string(), processedAt: v.number() }).index(
-    "by_event",
-    ["eventId"],
-  ),
+  events: defineTable({ eventId: v.string(), processedAt: v.number() })
+    .index("by_event", ["eventId"])
+    .index("by_processed", ["processedAt"]),
   audit: defineTable({
     organizationId: v.id("organizations"),
     actorId: v.id("users"),
@@ -74,7 +74,9 @@ export default defineSchema({
     key: v.string(),
     window: v.number(),
     count: v.number(),
-  }).index("by_key", ["key"]),
+  })
+    .index("by_key", ["key"])
+    .index("by_window", ["window"]),
   deletionJobs: defineTable({
     userId: v.id("users"),
     subject: v.string(),

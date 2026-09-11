@@ -1,12 +1,12 @@
 # Changelog
 
-## Unreleased
+## 0.1.0-alpha.1 — 2026-09-11
 
-- Created the private CompanyNerve planning foundation.
-- Defined template scope, free distribution with later paid services, and separate future-product repositories.
-- Added source assessment, architecture decisions, threat model, provider setup plan, and release acceptance criteria.
-- Added five visual landing-page concepts and a design ballot.
-- Bundled ten global skills with their supporting files and integrity manifest.
-- Added dependency-free foundation validation and GitHub Actions configuration.
+- Public MIT CompanyNerve source and GitHub template, with separate marketing and starter apps.
+- WorkOS identity and Convex organizations, roles, invitations, projects, quotas, audit history, exports and deletion jobs.
+- Stripe sandbox Checkout, a dedicated portal configuration, verified webhooks, reconciliation and a protected sample report.
+- Five landing-page options and shared application design recipes; final styling remains open.
+- Portable product export, pinned lockfile, CI, founder documentation, research assessment and ten unchanged coding skills.
+- Public marketing deployment at companynerve.com, with www redirecting to the apex.
 
-No application release, provider setup, or production launch has occurred.
+This is an alpha. Read `docs/status.md` for evidence and remaining production-readiness work. No standalone future product, live payment offering, or hosted public starter demo is included.

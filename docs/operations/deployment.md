@@ -1,56 +1,43 @@
-# Deploy CompanyNerve after implementation
+# Deployment and operations
 
-This is a runbook for a future approved build. No Vercel, Convex, WorkOS, Stripe, or DNS connection is configured by this planning phase. Namecheap was opened at the owner's request.
+## CompanyNerve deployment
 
-## Before provisioning
+The public marketing app is the Vercel project `companynerve-marketing`, rooted at `apps/marketing`, in the existing `stefandg1s-projects` team. The first successful deployment used commit `c28177a`. Git pushes to main trigger deployment. Marketing has no Convex, WorkOS or Stripe credentials. The existing Hobby plan was preserved; no unrelated project was removed.
 
-1. Confirm the approved release commit and that the marketing build works without private backend credentials.
-2. Identify the owner's intended provider accounts and regions. Check current plan terms and any budget before enabling paid resources.
-3. Gather account access through existing CLI credentials or signed-in dashboards. Ask the owner to complete passwords, MFA, and consent screens. Never collect passwords in repository files or chat.
-4. Record nonsecret project IDs, environments, and owners after provisioning. Store credentials only in local ignored files or provider secret stores.
+The starter runs locally on port 3001 against a dedicated CompanyNerve Convex development project and a CompanyNerve WorkOS staging project. Its Stripe product, recurring price, portal and webhook are sandbox-only and separate from existing products. Runtime values are held in ignored local environment files and Convex environment settings. No public hosted starter demo or live billing configuration is claimed.
 
-## GitHub
+## Domain record and rollback
 
-The repository is `StefanDG1/companynerve`, private, with `main` as its intended primary branch. Push the foundation and verify its workflow. Git's existing credential manager can authenticate Git operations even when `gh auth status` is signed out.
+On 2026-09-11, Namecheap parking records were replaced with the exact targets shown by Vercel:
 
-After implementation, add a required CI check and branch protection if the account plan supports private-repo rules. Verify enforcement rather than assuming a saved rule works. Use least-privilege Actions permissions and pinned third-party action commits. Enable available dependency/secret security features deliberately. Do not change visibility without explicit owner authorization.
+| Host | Before                                                | After                                      | TTL        |
+| ---- | ----------------------------------------------------- | ------------------------------------------ | ---------- |
+| @    | Unmasked URL redirect to http://www.companynerve.com/ | A 216.198.79.1                             | 30 minutes |
+| www  | CNAME parkingpage.namecheap.com.                      | CNAME f92f7debe2587d09.vercel-dns-017.com. | 30 minutes |
 
-Mark the repository as a GitHub template only when the exported starter is usable, or publish a dedicated distribution repository after a release decision. This planning repo is not advertised as a ready-to-use template.
+Email Forwarding and the TXT value `v=spf1 include:spf.efwd.registrar-servers.com ~all` were preserved. Nameservers were not changed. Vercel connects the apex to Production and redirects www to the apex with HTTP 308.
 
-## Convex and WorkOS
+For a website regression, promote the previous known-good deployment in Vercel. To reverse the domain migration itself, restore only the two prior website records above. Do not alter mail records. DNS rollback has propagation delay. A web rollback does not reverse database changes.
 
-Create a dedicated starter/demo Convex project. Use separate development and production deployments. Choose standard or Convex-managed WorkOS integration using current official setup instructions. Configure exact localhost/preview/production redirect URIs and token issuer/audience requirements. Avoid broad wildcard callback origins.
+## Deploy your own starter
 
-Verify sign-in, sign-out, organization creation, switching, invitation acceptance, and revocation against the actual backend. Record the membership freshness guarantee. Do not reuse production credentials from Kinetexa or Vydero.
+1. Export the starter and follow [local setup](../local-development.md). Provision services in your own accounts.
+2. Create isolated development, preview and production Convex/WorkOS environments. Do not point preview at production data. Choose regions and plan limits deliberately.
+3. Deploy the backend with the Convex CLI against the intended deployment. Set the environment variables from [the inventory](environment.md) in the correct server scope.
+4. Create a separate Vercel project rooted at `apps/starter`. Use Node 24, the pinned pnpm version and the app's Next.js build command. Import the workspace lockfile, not an independent app lockfile.
+5. Set the public Convex URL, WorkOS server credentials, a new random session secret, exact callback URL and canonical APP_URL. Register that callback and the absolute APP_URL as an allowed sign-out URI with WorkOS. Configure the same APP_URL in Convex for checkout returns.
+6. If billing is needed, create your own test product/recurring price and a dedicated portal configuration. Register the Convex HTTP URL plus `/stripe/webhook` for checkout.session.completed, customer.subscription.created/updated/deleted, invoice.paid, and invoice.payment_failed. Configure its signing secret and test mode. Use a restricted API key with the necessary permissions where possible.
+7. Check sign-in/out, organization creation/switching, invitation acceptance and revocation, a paid sandbox journey, cancellation and export/deletion. A successful build alone does not verify provider setup.
+8. Before real customers, set production secrets, support/legal identity, retention and backup policy, monitor provider failures, and rehearse a restore into an isolated deployment. Configure live billing and tax only when the product requires it. CompanyNerve's free template does not require a live price.
 
-Reference: [Convex AuthKit setup](https://docs.convex.dev/auth/authkit/add-to-app). Recheck its current instructions when executing this runbook.
+## Background jobs and recovery
 
-## Stripe
+Convex runs billing reconciliation hourly. Paid access expires if verification is more than 24 hours old, so a prolonged provider outage fails conservatively. Inspect Convex logs and the billing projection; an owner can trigger a refresh after provider recovery.
 
-Use test mode first. Implement the billing-authority decision from [contracts](../contracts.md). Register the actual webhook URL and only the event types used by the chosen integration. Record test-mode product/price IDs in environment configuration, not company-config source. Validate replay and cancellation before any live-mode setup.
+Expired invitations and old rate-limit/event records are removed in indexed batches by the daily cleanup job. Organization deletion locks the organization before paged purging. User identity deletion retries five times; failed `deletionJobs` remain visible in the Convex dashboard. After resolving the WorkOS error, an operator can invoke internal `identity:finishDeletion` with that job ID from the authorized deployment console. Keep job IDs and credentials out of public reports.
 
-The CompanyNerve template is free. The starter's sample Stripe flow demonstrates subscription handling for the founder's product. It is not a CompanyNerve paid-service sale. No CompanyNerve live prices are required in this phase.
+Account deletion retains organization-authored content and audit references. Organization deletion purges organization-owned example data, but Stripe records are retained under the provider account's own retention rules. Set a product-specific policy before launch.
 
-## Vercel
+## Repository operations
 
-Create a CompanyNerve marketing project rooted at `apps/marketing` after that directory exists. Create a separate starter/demo project rooted at `apps/starter` if required. Set their build commands from the tested workspace scripts. Keep marketing independent of Convex, WorkOS, and Stripe secrets.
-
-Use isolated preview credentials and a deliberate indexing/access policy. Verify auth redirects and webhook endpoints on the intended canonical hostname. Record the release commit and provider deployment URL after a successful build.
-
-## Namecheap and companynerve.com
-
-1. Sign in to [Namecheap](https://www.namecheap.com/myaccount/login/) and locate companynerve.com.
-2. Inspect its current nameservers and DNS records. Export or record the current nonsecret record set before edits. If DNS is hosted elsewhere, configure records at the authoritative host.
-3. Add companynerve.com and www.companynerve.com to the marketing project in Vercel.
-4. Read the exact DNS targets shown for that project at setup time. Do not use a remembered Vercel IP or generic CNAME.
-5. Add or update only the required website records. Preserve MX, email verification, SPF/DKIM/DMARC, and unrelated TXT records. Resolve any apex/www conflict deliberately.
-6. Verify provider domain ownership, DNS resolution, certificate issuance, and the chosen canonical redirect. Default canonical is the apex, with www redirecting to it.
-7. Smoke-test links, forms, metadata, and redirects at the public domain. Record before/after records and rollback steps without secrets.
-
-Do not move nameservers merely to host the site on Vercel. Keep registration and DNS ownership under the founder's control.
-
-## Launch and rollback
-
-Publish only the features supported by the current release. If no data is collected, do not add a pretend waitlist. If collection is added, first implement consent, storage, deletion, and accurate privacy copy for that actual flow.
-
-Retain the previous working deployment. Verify how to restore it and how to revert the specific DNS change. Database schema changes require a compatibility/backup plan; reverting a web deployment does not automatically reverse data changes. Record the final acceptance results in `docs/status.md`.
+The source is public, MIT for authored material, and enabled as a GitHub template. Private vulnerability reporting is enabled. CI uses read-only repository permissions and pinned action revisions. See [upgrading](../upgrading.md) before applying template changes to an existing product.

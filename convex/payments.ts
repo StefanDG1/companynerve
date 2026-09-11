@@ -5,9 +5,15 @@ import { api, internal } from "./_generated/api";
 import { v } from "convex/values";
 import type { ActionCtx } from "./_generated/server";
 const stripe = () => {
-  if (!process.env.STRIPE_SECRET_KEY)
-    throw new Error("Billing is not configured.");
-  return new Stripe(process.env.STRIPE_SECRET_KEY);
+  const key = process.env.STRIPE_SECRET_KEY;
+  if (!key) throw new Error("Billing is not configured.");
+  const mode = process.env.STRIPE_MODE ?? "test";
+  if (
+    !["test", "live"].includes(mode) ||
+    !new RegExp(`^[sr]k_${mode}_`).test(key)
+  )
+    throw new Error("Stripe key and billing environment do not match.");
+  return new Stripe(key);
 };
 const appUrl = () => {
   const url = process.env.APP_URL;
@@ -84,6 +90,7 @@ export const checkout = action({
       return (
         await client.billingPortal.sessions.create({
           customer: customerId,
+          configuration: process.env.STRIPE_PORTAL_CONFIG_ID,
           return_url: `${appUrl()}/app/${organizationId}/billing`,
         })
       ).url;
@@ -95,6 +102,7 @@ export const checkout = action({
       {
         customer: customerId,
         mode: "subscription",
+        integration_identifier: "companynerve-qmvtzjka",
         line_items: [{ price, quantity: 1 }],
         expires_at: Math.floor(reservation.expires / 1000),
         success_url: `${appUrl()}/app/${organizationId}/billing?checkout=complete`,
@@ -115,6 +123,7 @@ export const portal = action({
     return (
       await stripe().billingPortal.sessions.create({
         customer: auth.billing.customerId,
+        configuration: process.env.STRIPE_PORTAL_CONFIG_ID,
         return_url: `${appUrl()}/app/${organizationId}/billing`,
       })
     ).url;

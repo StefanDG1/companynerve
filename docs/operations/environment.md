@@ -1,20 +1,25 @@
 # Environment inventory
 
-Status: planned inventory. Exact variable names and scopes must match the SDK versions chosen in phase one. No provider values are present in this repository.
+No credentials are required to install, typecheck, run the synthetic tests, or build either application. Runtime sign-in requires the starter and Convex settings below. Marketing requires none.
 
-| Purpose                 | Expected configuration                                                            | Where it belongs                                                       |
-| ----------------------- | --------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
-| Marketing canonical URL | Public site URL, companynerve.com in production                                   | Marketing public config                                                |
-| Starter canonical URL   | Per-environment application URL and callback URI                                  | Starter config                                                         |
-| Convex client           | Deployment URL                                                                    | Starter public env                                                     |
-| Convex deploy           | Deployment credential if CI needs it                                              | Restricted CI/deployment secret                                        |
-| WorkOS                  | Client ID, API key, session encryption secret, webhook verification key when used | Public client ID only where SDK requires; all other values server-only |
-| Stripe                  | Test/live API key, webhook signing secret, environment-specific price IDs         | Starter server env and backend secret store as needed                  |
-| Email, if added         | Sender/domain settings, API credential                                            | Server env; separate environment/test recipients                       |
-| Observability, if added | Project endpoint, server token where needed, redaction policy                     | Scope to the service that sends events                                 |
+| Variable                        | Scope                                 | Purpose                                                      |
+| ------------------------------- | ------------------------------------- | ------------------------------------------------------------ |
+| CONVEX_DEPLOYMENT               | Root local CLI                        | Selected development deployment; created by Convex CLI       |
+| NEXT_PUBLIC_CONVEX_URL          | Starter; root local setup             | Public Convex cloud URL                                      |
+| WORKOS_CLIENT_ID                | Starter server and Convex             | AuthKit client and token verifier                            |
+| WORKOS_API_KEY                  | Starter server and Convex             | Identity operations; secret                                  |
+| WORKOS_COOKIE_PASSWORD          | Starter server only                   | At least 32 random characters for encrypted sessions         |
+| NEXT_PUBLIC_WORKOS_REDIRECT_URI | Starter                               | Exact callback URL registered with WorkOS                    |
+| APP_URL                         | Starter and Convex                    | Canonical application origin for invitations/billing returns |
+| STRIPE_MODE                     | Convex                                | Expected webhook environment: test or live                   |
+| STRIPE_SECRET_KEY               | Convex                                | Stripe server key; optional for Free use                     |
+| STRIPE_PRO_PRICE_ID             | Convex                                | Recurring price for the sample Pro plan                      |
+| STRIPE_PORTAL_CONFIG_ID         | Convex                                | Optional dedicated customer-portal configuration             |
+| STRIPE_WEBHOOK_SECRET           | Convex                                | Signature verifier for this deployment's endpoint            |
+| CONVEX_DEPLOY_KEY               | Restricted deployment secret, if used | Deploy a founder's own backend; never needed by marketing    |
 
-No `.env.example` for a fake application is created in phase zero. During implementation, generate a precise placeholder-only inventory beside the actual runtime. Distinguish required-for-build, required-for-local-run, and optional integration variables.
+Root `.env.example` and `apps/starter/.env.example` contain placeholders. `pnpm setup:local` copies required local values and creates a session secret, preserving it on reruns. Store provider credentials in ignored local files and provider environment stores, never source, logs or chat.
 
-Never copy `.env.local`, `.vercel`, deployment credentials, secret screenshots, or personal browser profiles into a template export. Avoid public-prefix variables for secrets. Mask values in setup diagnostics.
+Use separate development, preview and production data. The public CompanyNerve marketing site has no access to starter credentials. Each exported product must provision its own services. Review [deployment](deployment.md) before production.
 
-Development uses synthetic users and test billing. Preview uses isolated data and cannot mutate production. Production has separate secrets and narrowly scoped deployment access. Account IDs and URLs can be documented after setup; credentials cannot.
+The billing UI reads its mode from Convex. The backend rejects a Stripe key whose test/live prefix does not match STRIPE_MODE, before issuing a provider request.

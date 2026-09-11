@@ -2,9 +2,9 @@
 
 A free SaaS template for founders who want to understand, customize, and maintain what they ship.
 
-**Status: implementation in progress. See [verification status](docs/status.md) for completed checks and remaining setup.**
+**Public alpha. [Website](https://companynerve.com) � [Five design options](https://companynerve.com/designs) � [Verification status](docs/status.md).**
 
-CompanyNerve will bring together account access, organizations, subscriptions, an example product, and clear operating instructions. Five design recipes will let founders give their products different identities. Paid services may follow once separate products have been built and verified.
+CompanyNerve brings together account access, organizations, subscriptions, an example product, and clear operating instructions. Five design recipes let founders give their products different identities. Paid services may follow once separate products have been built and verified.
 
 The intended public website is **companynerve.com**. CompanyNerve-authored source is MIT licensed. Bundled third-party material retains its original terms.
 
@@ -37,6 +37,6 @@ Read the [current verification status](docs/status.md) before deploying with rea
 
 ## Repository boundaries
 
-CompanyNerve's eventual marketing site and starter live here. Future products such as LaunchProof and AccessProof get their own repositories, deployments, and designs. Only released, verified integrations are added to this template. See [future products](docs/future-products.md).
+CompanyNerve's marketing site and starter live here. Future products such as LaunchProof and AccessProof get their own repositories, deployments, and designs. Only released, verified integrations are added to this template. See [future products](docs/future-products.md).
 
 Read [CONTRIBUTING.md](CONTRIBUTING.md), [AGENTS.md](AGENTS.md), and [SECURITY.md](SECURITY.md) before making changes. Licensing status is in [LICENSE.md](LICENSE.md); bundled skill notices are in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).

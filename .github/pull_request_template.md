@@ -1,11 +1,11 @@
-## Change
+## What changes for the user?
 
-Describe the problem and resulting behavior.
+Describe the trigger and resulting behavior.
 
 ## Verification
 
-List meaningful checks and their results. State anything not verified.
+Record relevant checks and any unverified provider behavior. Use synthetic data.
 
-## Follow-up
+## Migration or setup
 
-Record deployment, migration, or design work still needed.
+Describe changed configuration, data migrations, and rollback needs, if any.

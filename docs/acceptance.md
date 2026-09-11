@@ -4,8 +4,8 @@ These are release requirements, not current pass results. Track evidence by comm
 
 ## Planning foundation
 
-- Local repository exists under `C:\Code\CompanyNerve`, with `main` tracking the private GitHub repo.
-- The documentation identifies the current scope, proposed work, missing source brief, commercial decision, and remaining approvals.
+- Local repository exists under `C:\Code\CompanyNerve`, with `main` tracking the public GitHub repo.
+- The documentation identifies the current scope, proposed work, missing source brief, commercial decision, and remaining verification.
 - Five reviewable visual concepts have distinct composition, type, and color choices.
 - Ten copied skills retain supporting files and source hashes. No machine-specific absolute path is required to read them.
 - Foundation validation passes; committed files contain no credentials or customer data.
@@ -41,4 +41,4 @@ These are release requirements, not current pass results. Track evidence by comm
 
 ## Appropriate verification
 
-Use Vitest/convex-test for rules and server behavior. Use Playwright for the signup/org/billing journey and browser interaction. Use visual review for layout; automated checks alone cannot choose a good design. Do not write redundant tests for decorative details. Re-run broader checks when a change crosses these boundaries, not as a ritual after every prose edit.
+Use Vitest/convex-test for rules and server behavior. Use browser interaction for the signup/org/billing journey and browser interaction. Use visual review for layout; automated checks alone cannot choose a good design. Do not write redundant tests for decorative details. Re-run broader checks when a change crosses these boundaries, not as a ritual after every prose edit.

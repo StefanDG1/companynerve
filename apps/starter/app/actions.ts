@@ -11,6 +11,8 @@ import type { FormState } from "@/components/action-form";
 import { recipes } from "@companynerve/design-recipes";
 const val = (d: FormData, key: string) => String(d.get(key) ?? "");
 const org = (d: FormData) => val(d, "organizationId") as Id<"organizations">;
+const signOutUrl = () =>
+  new URL(process.env.APP_URL || "http://localhost:3001").origin;
 async function run(
   work: () => Promise<FormState & { path?: string }>,
 ): Promise<FormState> {
@@ -178,11 +180,16 @@ export async function deleteAccount(_: FormState, d: FormData) {
       message: "Account access is locked. Identity deletion is processing.",
     };
   });
-  if (!result.error) await signOut({ returnTo: "/" });
+  if (!result.error) {
+    // Identity deletion also revokes provider sessions. Do not send the user
+    // to a provider logout endpoint for a session that may already be gone.
+    (await cookies()).delete(process.env.WORKOS_COOKIE_NAME || "wos-session");
+    redirect("/");
+  }
   return result;
 }
 export async function logout() {
-  await signOut({ returnTo: "/" });
+  await signOut({ returnTo: signOutUrl() });
 }
 export async function changeRecipe(d: FormData) {
   const recipe = val(d, "recipe");

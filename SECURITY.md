@@ -1,13 +1,9 @@
 # Security policy
 
-CompanyNerve is a private planning repository. No production release is supported yet.
+CompanyNerve is an early public template. The latest alpha is maintained on a best-effort basis; it is not a security certification or a promise that each founder's deployment is correctly configured.
 
-## Report a finding
+## Report a vulnerability
 
-For now, contact the repository owner through an existing private channel. Do not put credentials or customer information in a public GitHub issue. A monitored security address or GitHub private vulnerability reporting must be configured before public distribution. No response-time commitment is published yet.
+Use [GitHub private vulnerability reporting](https://github.com/StefanDG1/companynerve/security/advisories/new). This is enabled for the repository. Include the affected commit, a synthetic reproduction, expected and observed behavior, and impact. Keep credentials and customer information out of issues. No response-time guarantee is published.
 
-Include the affected commit, a synthetic reproduction, the expected boundary, the observed result, and the impact. Redact tokens and private data.
-
-## Before a release
-
-The [threat model](docs/security/threat-model.md) and [acceptance criteria](docs/acceptance.md) define the security work required for the template. A successful documentation check is not security certification. Hosted integrations require independent configuration and verification in each environment.
+Review [verification status](docs/status.md) and the [threat model](docs/security/threat-model.md). Before real customers, verify identity, tenant isolation, billing and deletion in your own environment, use restricted provider credentials where supported, and rehearse backup/restore. Report unverified cases accurately.

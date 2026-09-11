@@ -37,7 +37,6 @@ const values = {
     existing.WORKOS_COOKIE_PASSWORD || randomBytes(32).toString("hex"),
   NEXT_PUBLIC_WORKOS_REDIRECT_URI: "http://localhost:3001/callback",
   APP_URL: "http://localhost:3001",
-  BILLING_MODE: "test",
 };
 const missing = Object.entries(values)
   .filter(([, v]) => !v)

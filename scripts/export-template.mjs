@@ -39,7 +39,6 @@ const omitted = new Set([
   ".git",
   "work",
   "outputs",
-  "research",
 ]);
 function filter(path) {
   const name = path.split(/[\\/]/).at(-1);
@@ -60,6 +59,7 @@ for (const path of [
   ".gitignore",
   ".gitattributes",
   ".editorconfig",
+  ".env.example",
   ".nvmrc",
   ".prettierignore",
   "tsconfig.json",
@@ -70,6 +70,7 @@ for (const path of [
   "LICENSE.md",
   "THIRD_PARTY_NOTICES.md",
   "CONTRIBUTING.md",
+  "CHANGELOG.md",
   "SECURITY.md",
 ])
   if (existsSync(join(root, path)))
@@ -89,8 +90,7 @@ writeFileSync(join(dest, "convex.json"), "{}\n");
 const config = join(dest, "packages/company-config/index.ts");
 let content = readFileSync(config, "utf8");
 content = content
-  .replace("slug: 'your-product'", `slug: '${name}'`)
-  .replace("slug:'your-product'", `slug:'${name}'`)
+  .replace(/slug:\s*["']your-product["']/, `slug: "${name}"`)
   .replaceAll("Your product", name);
 writeFileSync(config, content);
 writeFileSync(

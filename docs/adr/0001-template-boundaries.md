@@ -1,6 +1,6 @@
 # ADR 0001: Keep the starter and future products independent
 
-Status: proposed architecture for the approved planning scope. Application implementation is awaiting owner approval.
+Status: accepted and implemented. ADR 0002 clarifies the identity/membership boundary.
 
 ## Context
 

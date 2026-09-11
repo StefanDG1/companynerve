@@ -1,5 +1,37 @@
-# Implementation status
+# Verification and release status
 
-Updated 2026-09-11. The owner approved implementation, commits/pushes, and computer-assisted browser verification after the foundation draft. Basic shadcn styling is acceptable. The owner will select the final landing-page design and refine the styling later.
+Updated 2026-09-11. CompanyNerve is a public alpha template with a live marketing site. Final styling remains open. This record separates implementation from checks actually performed.
 
-Repository setup and architecture documentation are present. Application work is in progress. Hosted-service verification and release packaging are not complete. See the next verification update for actual results.
+## Available now
+
+- [Website](https://companynerve.com), [five designs](https://companynerve.com/designs), and [public repository](https://github.com/StefanDG1/companynerve).
+- GitHub template flag, MIT for authored source, private vulnerability reporting, issue/PR templates and CI.
+- Separate marketing/starter applications; identity, organizations, roles, invitations, sample projects, quotas, audit records, exports/deletion, Stripe billing example and five design recipes.
+- Founder setup, exact environment inventory, architecture/contracts, research/repository assessment, future-product plan, operations and upgrade instructions; ten unchanged skill snapshots.
+
+## Verified
+
+| Boundary             | Evidence                                                                                                                                                                                                                                                                                                                             |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Source checks        | `pnpm check` passed validation, TypeScript, nine focused backend tests and both production builds. The subsequent account-route/sign-out fixes also passed the starter production build and browser regression checks.                                                                                                               |
+| Backend tests        | Anonymous/cross-organization access, invitation ownership/reuse/expiry, roles/revocation/final-owner rule, concurrent quota enforcement, isolated organization deletion, stale/expired/replayed billing, signed/forged/wrong-mode webhooks, key/mode mismatch, and expiry cleanup behind active records.                             |
+| Fresh copy           | A fresh exported starter installed with the frozen lockfile, typechecked and built without credentials. A second export verified corrected product name/slug, all documentation links, skill hashes, and placeholder-only environment files.                                                                                         |
+| Identity and product | Synthetic verified WorkOS staging identity signed in through the browser, bootstrapped in Convex, created a workspace and project, and signed out back to the local app.                                                                                                                                                             |
+| Billing              | Real Stripe sandbox Checkout with the standard test card; signed webhook changed Free to Pro; paid report returned 200. Dedicated portal scheduled cancellation at the period boundary, retaining Pro. Ending the synthetic test subscription delivered revocation; the report returned 403 and UI returned to Free. No live charge. |
+| Data                 | Organization export returned 200; deleting the synthetic workspace removed it from the chooser. Account export returned 200 after fixing proxy coverage. Account deletion removed the staging WorkOS identity.                                                                                                                       |
+| Marketing            | Homepage, gallery, docs, privacy, robots and sitemap returned 200. All five landing recipes had no horizontal overflow at 1440, 390 and 320 CSS pixels. Representative desktop/mobile screenshots reviewed; button contrast corrected.                                                                                               |
+| Domain               | Public DNS resolves to the provider's current targets; valid HTTPS serves companynerve.com. www returns 308 to the apex. Mail records preserved.                                                                                                                                                                                     |
+| Secrets and guidance | Current tracked/untracked deliverable files checked against the actual setup secrets: no matches. Ten copied skill snapshots pass SHA-256 integrity validation.                                                                                                                                                                      |
+
+Earlier defects found during browser verification were fixed: shared CSS overrode button text colors, account export missed AuthKit proxy coverage, and account deletion attempted provider logout after deleting the identity. Stripe mode display now comes from the backend, and mismatched key/environment configuration is rejected before provider calls.
+
+## Deliberate alpha limits
+
+- The starter is verified locally against hosted development/staging services. There is no public hosted starter demo, production starter database, or live payment offering.
+- Membership invitations are shareable links, not delivered emails. WorkOS owns identity; no WorkOS SSO organization synchronization is included.
+- Visual styling is provisional. Comprehensive accessibility certification, field performance metrics and every browser/recipe/state permutation are not claimed.
+- Backup/restore rehearsal, provider-outage drills, production monitoring, live tax setup and a product-specific retention/legal/support policy remain before real customers. Failed identity deletion jobs require an operator after five retries.
+- Copied skills retain their original contents/notices. The owner deferred resolution of unclear redistribution rights; the MIT license does not relicense third-party material.
+- Future services and standalone products remain separate work. No existing hosting plan or unrelated product was changed.
+
+See [the deployment runbook](operations/deployment.md), [acceptance checklist](acceptance.md), and [next steps](plan.md). A template release does not certify a founder's subsequent deployment.

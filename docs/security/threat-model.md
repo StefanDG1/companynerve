@@ -1,6 +1,6 @@
 # Template threat model
 
-Status: design-stage requirements. Controls below are not implemented yet.
+This is the review checklist for the implemented starter. See [verification status](../status.md) for tests actually completed; requirements below are not blanket pass results.
 
 ## Assets and actors
 
