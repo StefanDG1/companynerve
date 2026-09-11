@@ -15,6 +15,7 @@ Start with [decisions](decisions.md), then [status](status.md). Start with [loca
 | [Acceptance criteria](acceptance.md)                       | Definition of a usable template and launch                 |
 | [Deployment runbook](operations/deployment.md)             | GitHub, Vercel, Convex, WorkOS, Stripe, and DNS sequencing |
 | [Environment inventory](operations/environment.md)         | Secrets, environment isolation, and ownership              |
+| [Authentication setup](operations/authentication.md)       | Email codes, Google-only login, and independent product credentials |
 | [Design directions](design/directions.md)                  | Five recipes with layout, type, and behavior               |
 | [Visual board](design/concepts.html)                       | Static concept previews for voting                         |
 | [Design ballot](design/ballot.md)                          | Record the preferred CompanyNerve identity                 |

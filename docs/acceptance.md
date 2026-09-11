@@ -14,6 +14,7 @@ These are release requirements, not current pass results. Track evidence by comm
 
 - A fresh export can install reproducibly using the committed package-manager version and lockfile.
 - Setup errors identify the missing variable or integration without displaying a secret.
+- Hosted signup/sign-in offer email one-time codes and Google only, with passwords and other methods disabled. Wrong, expired, and replayed codes fail; both successful methods complete the app callback and sign-out. See [authentication verification](operations/authentication.md#verify-the-provider-setup).
 - A founder can rename/rebrand the sample, sign in, create/switch organizations, invite a member, and create a sample resource.
 - Cross-tenant access fails for list, direct ID read, mutation, export, and file operations when present.
 - Role escalation fails. Removing the final owner fails until ownership transfers. Revoked members lose access within the documented bound.
@@ -36,6 +37,7 @@ These are release requirements, not current pass results. Track evidence by comm
 - Domain records match the deployment provider's current instructions. Both apex and www behave as intended over valid HTTPS.
 - Record a successful deployment, an isolated restore exercise, and a rollback procedure with the release commit.
 - A second fresh product generated from the template completes the documented setup without hidden global files or original-account IDs.
+- Exports omit local credentials and provider metadata. Each generated app configures independent WorkOS and Google OAuth credentials; suite credentials are never inherited. Saved provider settings and completed authentication are recorded separately from source/build checks.
 - The distribution license, third-party notices, privacy/terms requirements for collected data, security contact, and supported-version policy are resolved before public release.
 - A free template release does not require purchase of a future CompanyNerve service.
 

@@ -4,16 +4,16 @@ Use Node.js 24 and pnpm 12.3.4. Install with `pnpm install --frozen-lockfile` fr
 
 ## Marketing and design previews
 
-In the CompanyNerve source repository, run `pnpm dev:marketing` and open http://localhost:3000. The five landing pages are under `/designs`. Marketing is excluded from a generated product.
+Run `pnpm dev:marketing` and open http://localhost:3000. The five landing pages are under `/designs`. Generated products include the marketing application with their own branding.
 
 ## Authenticated starter
 
 1. Run `pnpm convex:dev`. Choose a new project in your own Convex account. The CLI creates an ignored root `.env.local`.
-2. Create a dedicated WorkOS project/environment. Configure AuthKit with the exact redirect `http://localhost:3001/callback` and homepage/sign-out URI `http://localhost:3001`. Enable the authentication methods you intend to offer.
+2. Create this product's own WorkOS project/environment. Configure AuthKit with the exact redirect `http://localhost:3001/callback`, homepage/sign-out URI `http://localhost:3001`, and Initiate login URL `http://localhost:3001/sign-in`. Enable Magic Auth email one-time codes and Google OAuth only. Disable email/password, passkeys, SSO, and other social providers. Follow [authentication setup](operations/authentication.md) for the product's independent Google OAuth client.
 3. Add `WORKOS_CLIENT_ID` and `WORKOS_API_KEY` to the ignored root `.env.local` from that WorkOS environment.
 4. Set the same variables in the matching Convex deployment. Use `pnpm exec convex env set NAME` and pipe the value on stdin, or a temporary ignored environment file. Never paste a secret into shell history or a committed file.
 5. Run `pnpm setup:local`. It writes `apps/starter/.env.local` and generates a session-encryption secret. It preserves that secret on repeat runs.
-6. Run `pnpm dev` and open http://localhost:3001. Create a verified account. Create a workspace and a project.
+6. Run `pnpm dev` and open http://localhost:3001. Create an account using an email code, then create a workspace and project. Sign out and verify a separate Google sign-in. Neither flow should ask you to create a password.
 
 Keep `pnpm convex:dev` running while changing the backend. The CLI updates generated types. Commit `convex/_generated` without environment values. WorkOS authenticates users; Convex owns organizations and roles. WorkOS SSO organization synchronization is not implemented.
 
@@ -27,12 +27,12 @@ Billing is optional for ordinary Free-plan product use. Without Stripe settings,
 
 ## Verification
 
-Run `pnpm typecheck`, `pnpm test`, and `pnpm build`. The nine backend tests use synthetic users and do not need provider accounts. They verify cross-organization access, roles/invitations, revocation, quotas, deletion, and payment boundaries. A build is not verification of a hosted provider configuration.
+Run `pnpm check`. The backend tests use synthetic users and do not need provider accounts. They verify cross-organization access, roles/invitations, revocation, quotas, deletion, and payment boundaries. A build is not verification of a hosted provider configuration. Use the [authentication checks](operations/authentication.md#verify-the-provider-setup) for email delivery, Google callbacks, and rejection of invalid codes.
 
 ## Create a new product
 
 Run `pnpm template:export -- --name my-product --out ../my-product`. The output path must not exist and must be outside the source repository. The export preserves source, docs, skills, tests, and a lockfile, including the marketing app, but omits secrets and local provider configuration. Set website/app domains and support email in company configuration before publishing. Follow [launch operations](operations/launch.md) for the hosted setup.
 
-Run a fresh install and build from the exported directory. Change `packages/company-config/index.ts`, then provision your own provider projects. Do not reuse CompanyNerve's environment values or accounts.
+Run a fresh install and build from the exported directory. Change `packages/company-config/index.ts`, then provision your own provider projects. Each product owns its WorkOS environment, Google OAuth client/consent branding, callback URLs, and session secret. Do not inherit CompanyNerve or suite credentials. Exporting source does not configure any provider.
 
 Before live billing, review tax registration and Stripe Tax requirements for your markets. Tax calculation is not enabled by this sandbox example. Prefer a restricted key with only the customer, subscription, Checkout, and portal permissions the backend needs; verify those permissions in your own sandbox.

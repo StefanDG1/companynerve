@@ -5,18 +5,18 @@ Use this guide for CompanyNerve or a newly exported product. The export includes
 ## Configure the product
 
 1. Set the name, description, website URL, application URL, support email, and design recipe in `packages/company-config/index.ts`.
-2. Keep `website.kind` as `product` in an export. It selects the product landing page instead of CompanyNerve's template promotion. Review the privacy page against the services you actually enable.
+2. Keep `website.kind` as `product` in an export. It selects the product landing page instead of CompanyNerve's template promotion. Exports remove CompanyNerve's `website.operator` identity and reset the support email. Add verified operator details for your product, review its privacy disclosures, and write its own terms before publishing. The CompanyNerve terms route is intentionally unavailable in product mode; add product terms to the footer and sitemap when ready.
 3. Follow [local development](../local-development.md). Use separate provider environments for development and production. Never reuse CompanyNerve's deployment IDs or credentials in an exported product.
 
 ## Deploy authentication and data
 
-1. Create a production WorkOS environment and application. Enable the chosen authentication methods. Set the exact HTTPS callback, homepage, and sign-out origin.
-2. For Google sign-in, follow [WorkOS's Google OAuth guide](https://workos.com/docs/integrations/google-oauth). Create a dedicated OAuth web client in Google Cloud, copy the exact redirect shown by WorkOS, configure your app's public branding/privacy URLs, and publish its audience when ready. Store its client secret in WorkOS, not in the frontend or Git.
+1. Create this product's production WorkOS environment and application. Enable Magic Auth email one-time codes and Google OAuth only; disable Email + Password and all other methods. Set the exact HTTPS callback, homepage/sign-out origin, and `/sign-in` Initiate login URL. Follow [authentication setup](authentication.md).
+2. For Google sign-in, follow [WorkOS's Google OAuth guide](https://workos.com/docs/integrations/google-oauth). Create this product's own Google Cloud project and OAuth web client, copy the exact redirect shown by its WorkOS environment, configure its public branding/privacy URLs, and publish its audience when ready. Store the client credentials in WorkOS. Never inherit the suite's or CompanyNerve's client credentials.
 3. Create a production Convex deployment. Set the server variables from [the inventory](environment.md), then deploy the backend. Confirm `/health` responds and anonymous requests cannot bootstrap an identity.
 4. Create a Vercel project rooted at `apps/starter`. Use Node 24 and the committed lockfile. Set its production environment variables. The two `NEXT_PUBLIC_` URL variables are public configuration; the WorkOS API key and cookie password are secrets.
 5. Scope production credentials to Production only. Either provision isolated preview services or leave preview authentication unconfigured. Do not connect pull requests to customer data.
 6. Add the application's custom domain using the exact DNS target shown by the hosting provider. Check HTTPS and callback matching before advertising signup.
-7. Verify signup, Google sign-in, sign-out, workspace/project creation, and account export in a browser. Record which flows passed and clean up synthetic records. Provider configuration alone is not end-to-end evidence.
+7. Verify email-code signup/sign-in, Google sign-in, sign-out, workspace/project creation, and account export in a browser. Check invalid/expired/reused code rejection and the absence of password/reset prompts using [the authentication checks](authentication.md#verify-the-provider-setup). Record which flows passed and clean up synthetic records. Provider configuration alone is not end-to-end evidence.
 
 Google Cloud holds the OAuth credentials needed for Google sign-in. Google Search Console handles website ownership, indexing reports, and sitemap submission. Configuring one does not configure the other.
 

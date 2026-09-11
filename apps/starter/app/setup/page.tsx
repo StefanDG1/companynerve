@@ -5,16 +5,29 @@ export default function Page() {
     <main className="narrow" id="main">
       <h1>
         {configured()
-          ? "Your setup is connected."
+          ? "Application settings are present."
           : "Connect your application."}
       </h1>
       <p>
-        This page explains a missing integration. It does not simulate a
-        signed-in account.
+        Environment settings do not verify provider configuration. Complete
+        sign-in with an email one-time code and with Google to check your setup.
       </p>
       <ol>
         <li>Run the Convex development setup from the repository root.</li>
-        <li>Configure WorkOS and its localhost callback.</li>
+        <li>
+          Create this product&apos;s own WorkOS environment. Register
+          <code> http://localhost:3001/callback</code> and the sign-in URL
+          <code> http://localhost:3001/sign-in</code>.
+        </li>
+        <li>
+          Enable Magic Auth email codes and Google OAuth in WorkOS. Disable
+          email/password and other sign-in methods.
+        </li>
+        <li>
+          Configure Google with this product&apos;s own OAuth client. Store its
+          secret in WorkOS. Do not reuse CompanyNerve or another product&apos;s
+          credentials.
+        </li>
         <li>
           Run <code>node scripts/setup-local.mjs</code> to prepare the starter
           environment.

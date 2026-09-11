@@ -95,15 +95,16 @@ content = content
   )
   .replaceAll("https://companynerve.com", "https://example.com")
   .replaceAll("https://app.companynerve.com", "https://app.example.com")
-  .replaceAll("danistefangheorghiu@gmail.com", "owner@example.com");
+  .replaceAll("contact@exponentialeducation.ro", "owner@example.com")
+  .replace(/    operator: \{[\s\S]*?\r?\n    \},\r?\n/, "");
 writeFileSync(config, content);
 writeFileSync(
   join(dest, "README.md"),
-  `# ${name}\n\nCreated from CompanyNerve ${pkg.version}.\n\nUse Node 24 and the pinned pnpm version. Run \`pnpm install --frozen-lockfile\`, follow [local setup](docs/local-development.md), then run \`pnpm dev\` for the app or \`pnpm dev:marketing\` for the website.\n\nBoth applications share company configuration, design recipes, and UI. Auth, billing, and dashboard code are the same code used by CompanyNerve. No credentials or production data are included.\n\nEdit \`packages/company-config/index.ts\`, replace the example domains and support email, and choose your recipe. Review marketing copy and privacy disclosures for your product before publishing. Follow [launch operations](docs/operations/launch.md) for hosting, authentication, billing, and search setup.\n\nRun \`pnpm check\` before deployment.\n`,
+  `# ${name}\n\nCreated from CompanyNerve ${pkg.version}.\n\nUse Node 24 and the pinned pnpm version. Run \`pnpm install --frozen-lockfile\`, follow [local setup](docs/local-development.md), then run \`pnpm dev\` for the app or \`pnpm dev:marketing\` for the website.\n\nBoth applications share company configuration, design recipes, and UI. Auth, billing, and dashboard code are the same code used by CompanyNerve. No credentials or production data are included.\n\nAuthentication uses email one-time codes and Google OAuth only. Follow [authentication setup](docs/operations/authentication.md): enable Magic Auth and Google in your own WorkOS environment, disable passwords and other methods, and provision this product's own Google OAuth client/consent branding, callbacks, and session secret. Never inherit CompanyNerve or suite credentials. Exporting source does not configure or verify providers.\n\nEdit \`packages/company-config/index.ts\`, replace the example domains and support email, and choose your recipe. Review marketing copy and privacy disclosures for your product before publishing. Follow [launch operations](docs/operations/launch.md) for hosting, authentication, billing, and search setup.\n\nRun \`pnpm check\` before deployment.\n`,
 );
 writeFileSync(
   join(dest, "AGENTS.md"),
-  "# Product instructions\n\nThis is a CompanyNerve-generated product. Read README.md and docs/local-development.md. Keep backend organization authorization, billing checks, and negative tests when adding your product logic. Read relevant skills under .agents/skills. Never commit secrets. Record your own product requirements here.\n",
+  "# Product instructions\n\nThis is a CompanyNerve-generated product. Read README.md, docs/local-development.md, and docs/operations/authentication.md. Authentication uses email one-time codes and Google OAuth only; disable passwords and other methods in WorkOS and do not promote password/reset flows. Provision this product's own WorkOS environment, Google OAuth client/consent branding, callbacks, and session secret. Never inherit CompanyNerve or suite credentials. Environment values do not prove provider setup. Keep backend organization authorization, billing checks, and negative tests when adding your product logic. Read relevant skills under .agents/skills. Never commit secrets. Record implemented, tested, deployed, and externally verified separately. Record your own product requirements here.\n",
 );
 writeFileSync(
   join(dest, "template-version.json"),

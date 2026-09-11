@@ -17,13 +17,15 @@ docs                    Setup, operating instructions, decisions and evidence
 
 WorkOS AuthKit handles sign-in and encrypted sessions. The Next.js server retrieves the user's access token and calls Convex through a request-scoped client. Convex checks the identity and current application membership for each operation. The browser cannot grant roles or paid access.
 
+The authentication policy is email one-time codes (Magic Auth) and Google OAuth only, with passwords and other methods disabled in WorkOS. Each product owns its provider credentials. See [authentication setup](operations/authentication.md). Keep backend authorization at the data boundary, as described in the [Next.js authentication guide](https://nextjs.org/docs/app/guides/authentication).
+
 Stripe calls the Convex HTTP webhook. A verified event triggers a fresh Stripe read; the resulting entitlement projection is versioned and expires conservatively. See [contracts](contracts.md) and [membership decision](adr/0002-application-memberships.md).
 
 ## Stack
 
 Node 24, pinned pnpm 12.3.4, Next.js 16.3.4, React 19.3.0, strict TypeScript 7.0.2, Tailwind 4.3.3, Zod, Convex 1.45, WorkOS AuthKit, and Stripe. Exact SDK versions live in the manifests and lockfile. A pnpm workspace is sufficient; no Turborepo layer is needed for this size.
 
-Shared UI uses local source, native selects, and system fonts. The five recipes change density, typography and composition as well as colors. The owner selected Cobalt workshop for CompanyNerve; future products choose their own recipe. Email delivery, uploads, telemetry, and generalized plugins are absent because no shipped journey needs them.
+Shared UI uses local source, native selects, and system fonts. The five recipes change density, typography and composition as well as colors. The owner selected Cobalt workshop for CompanyNerve; future products choose their own recipe. WorkOS delivers authentication codes; application email delivery, uploads, telemetry, and generalized plugins are absent because no shipped journey needs them.
 
 ## Distribution
 

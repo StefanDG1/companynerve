@@ -61,6 +61,10 @@ export function Footer() {
             : "Template source license"}
         </a>
         <Link href="/privacy">Privacy</Link>
+        {company.website.kind === "template" && (
+          <Link href="/terms">Terms</Link>
+        )}
+        {company.website.operator && <Link href="/legal">Legal notice</Link>}
         <a href={"mailto:" + company.website.supportEmail}>Contact</a>
       </div>
     </footer>

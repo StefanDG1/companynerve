@@ -8,7 +8,7 @@ No credentials are required to install, typecheck, run the synthetic tests, or b
 | NEXT_PUBLIC_CONVEX_URL          | Starter; root local setup             | Public Convex cloud URL                                      |
 | WORKOS_CLIENT_ID                | Starter server and Convex             | AuthKit client and token verifier                            |
 | WORKOS_API_KEY                  | Starter server and Convex             | Identity operations; secret                                  |
-| WORKOS_COOKIE_PASSWORD          | Starter server only                   | At least 32 random characters for encrypted sessions         |
+| WORKOS_COOKIE_PASSWORD          | Starter server only                   | At least 32 random characters for session encryption, not user login |
 | NEXT_PUBLIC_WORKOS_REDIRECT_URI | Starter                               | Exact callback URL registered with WorkOS                    |
 | APP_URL                         | Starter and Convex                    | Canonical application origin for invitations/billing returns |
 | STRIPE_MODE                     | Convex                                | Expected webhook environment: test or live                   |
@@ -22,8 +22,16 @@ Root `.env.example` and `apps/starter/.env.example` contain placeholders. `pnpm 
 
 Use separate development, preview and production data. The public CompanyNerve marketing site has no access to starter credentials. Each exported product must provision its own services. Review [deployment](deployment.md) before production.
 
+## Authentication defaults
+
+In each product's WorkOS environment, enable Magic Auth email one-time codes and Google OAuth only. Disable Email + Password and other sign-in methods. These are provider settings, not `.env` switches; this template has no `DISABLE_PASSWORD` or provider-configured flag. Having environment values is not proof of saved provider settings or completed sign-in.
+
+Each generated app owns its WorkOS client/environment, Google Cloud OAuth client and consent branding, callback URLs, and session secret. Do not inherit CompanyNerve or suite credentials. Store the Google client ID and secret in the selected WorkOS environment; no Google OAuth environment variables are consumed by Next.js or Convex. See [authentication setup](authentication.md).
+
 The billing UI reads its mode from Convex. The backend rejects a Stripe key whose test/live prefix does not match STRIPE_MODE, before issuing a provider request.
 
 ## Website configuration
+
+The optional `website.operator` object in company configuration supplies the legal name, registered address, CUI, Trade Register number, and EUID for the legal notice. CompanyNerve uses company-published facts from exponentialeducation.ro privacy/terms plus the reused Stripe profile postcode, without independent registry validation. Exports remove the object and replace the support email with `owner@example.com`. These are public facts, not provider credentials. A generated product must supply its own legal identity and policies before publishing.
 
 Marketing optionally accepts `NEXT_PUBLIC_SITE_URL` to override the configured canonical origin and `GOOGLE_SITE_VERIFICATION` for a Search Console URL-prefix HTML token. Domain properties use a DNS verification record instead. Neither value is an authentication credential. Vercel supplies `VERCEL_ENV`; Preview emits noindex and disallows crawlers. Configure production app values only in Production; provision separate services before enabling authenticated previews.

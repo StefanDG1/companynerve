@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Set email one-time codes and Google OAuth as the only authentication methods in setup guidance, with passwords disabled in WorkOS. Clarify the starter UX and distinguish local settings from verified provider setup.
+- Require independent WorkOS/Google credentials for every generated app and carry the authentication policy into exported instructions.
+- Add English privacy, terms, and legal-notice pages for CompanyNerve using company-published operator details and the reused Stripe profile postcode, without independent registry validation. Reset legal identity/contact on export and keep CompanyNerve's terms out of generated product navigation.
+
 - Export the website and application together using shared branding, auth, billing, and dashboard code.
 - Hide paid checkout until the backend billing configuration is complete.
 - Add canonical/structured metadata, preview noindex, Search Console and production launch guides, and two focused skills.

@@ -11,6 +11,7 @@ export default function Page() {
           <p className="intro">{company.product.name}</p>
           <h1>A workspace for work that matters.</h1>
           <p>{company.product.description}</p>
+          <p>Continue with an email one-time code or your Google account.</p>
           <div className="actions">
             <Button asChild>
               <Link href="/sign-up">Create an account</Link>

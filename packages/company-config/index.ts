@@ -19,6 +19,15 @@ export const companySchema = z.object({
     url: z.url(),
     appUrl: z.url(),
     supportEmail: z.email(),
+    operator: z
+      .object({
+        name: z.string().min(1),
+        address: z.string().min(1),
+        taxId: z.string().min(1),
+        tradeRegister: z.string().min(1),
+        euid: z.string().min(1),
+      })
+      .optional(),
   }),
   roles: z.tuple([z.literal("owner"), z.literal("admin"), z.literal("member")]),
   plans: z.object({
@@ -42,7 +51,14 @@ export const company = defineCompany({
     kind: "template",
     url: "https://companynerve.com",
     appUrl: "https://app.companynerve.com",
-    supportEmail: "danistefangheorghiu@gmail.com",
+    supportEmail: "contact@exponentialeducation.ro",
+    operator: {
+      name: "EXPONENTIAL EDUCATION S.R.L.",
+      address: "Strada N. Istrati, No. 6, Iași, Iași County, 700460, Romania",
+      taxId: "54790758",
+      tradeRegister: "J2026035424002",
+      euid: "ROONRC.J2026035424002",
+    },
   },
   roles: ["owner", "admin", "member"],
   plans: { free: { projects: 3 }, pro: { projects: 100 } },

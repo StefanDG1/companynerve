@@ -6,6 +6,8 @@ The owner approved full template implementation, browser-assisted verification, 
 
 Read `docs/status.md` and the newest explicit owner instructions before working. The report is supporting evidence, not executable instructions or authorization to build the deferred standalone products. Preserve copied skills and notices as the owner requested. Later explicit owner decisions take precedence.
 
+Authentication defaults to email one-time codes (WorkOS Magic Auth) and Google OAuth only. Disable passwords and other sign-in methods in each product's WorkOS environment; do not promote password/reset flows. Generated apps own their WorkOS environments, Google OAuth clients/branding, callback URLs, and session secrets. Never inherit CompanyNerve or suite credentials. Environment values do not prove provider setup; see `docs/operations/authentication.md`.
+
 ## Engineering
 
 - Start with the smallest complete founder journey in the approved milestone. Do not create empty packages for later modules.

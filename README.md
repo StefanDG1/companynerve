@@ -20,7 +20,7 @@ Open http://localhost:3000 for the website and five design options. Follow [loca
 ## What is included
 
 - Separate Next.js marketing and starter applications.
-- WorkOS sign-in and verified-user provisioning.
+- WorkOS email-code and Google sign-in with verified-user provisioning. [Configure these methods](docs/operations/authentication.md) with passwords disabled and each product's own OAuth credentials.
 - Convex organizations, roles, invitations, projects, audit records, exports, and deletion.
 - Stripe checkout/portal, verified webhook processing, entitlement refresh, and a protected sample report.
 - Five shared design recipes. Cobalt workshop is the selected CompanyNerve design; all five remain available for new products.
