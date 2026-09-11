@@ -1,0 +1,34 @@
+{
+  "name": "@companynerve/starter",
+  "version": "0.1.0-alpha.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev --port 3001",
+    "build": "next build",
+    "start": "next start --port 3001",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "next": "16.3.4",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "@companynerve/company-config": "workspace:*",
+    "@companynerve/design-recipes": "workspace:*",
+    "@companynerve/ui": "workspace:*",
+    "lucide-react": "0.577.0",
+    "@workos-inc/authkit-nextjs": "4.3.1",
+    "@workos-inc/node": "10.7.0",
+    "convex": "1.45.0",
+    "stripe": "22.6.1",
+    "zod": "4.5.4"
+  },
+  "devDependencies": {
+    "@types/node": "24.13.3",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "typescript": "5.9.3",
+    "tailwindcss": "4.2.1",
+    "@tailwindcss/postcss": "4.2.1"
+  }
+}
