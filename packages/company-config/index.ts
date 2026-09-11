@@ -14,6 +14,12 @@ export const companySchema = z.object({
     description: z.string().min(1),
   }),
   brandRecipe: z.enum(recipeIds),
+  website: z.object({
+    kind: z.enum(["template", "product"]),
+    url: z.url(),
+    appUrl: z.url(),
+    supportEmail: z.email(),
+  }),
   roles: z.tuple([z.literal("owner"), z.literal("admin"), z.literal("member")]),
   plans: z.object({
     free: z.object({ projects: z.number().int().min(1).max(100) }),
@@ -26,11 +32,18 @@ export function defineCompany(value: z.input<typeof companySchema>) {
 export const company = defineCompany({
   schemaVersion: 1,
   product: {
-    slug: "your-product",
-    name: "Your product",
-    description: "A place for your next useful idea.",
+    slug: "companynerve",
+    name: "CompanyNerve",
+    description:
+      "Accounts, shared workspaces, and projects built with the open-source CompanyNerve template.",
   },
   brandRecipe: "cobalt",
+  website: {
+    kind: "template",
+    url: "https://companynerve.com",
+    appUrl: "https://app.companynerve.com",
+    supportEmail: "danistefangheorghiu@gmail.com",
+  },
   roles: ["owner", "admin", "member"],
   plans: { free: { projects: 3 }, pro: { projects: 100 } },
 });

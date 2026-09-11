@@ -20,3 +20,7 @@ Current decisions recorded 2026-09-11. These reflect the owner's latest instruct
 Choose the first separate product and its customer problem after reviewing the starter. Resolve any unclear third-party skill redistribution rights. Before accepting real customers, establish the product's legal/support identity, retention policy, production environments and any live billing/tax requirements.
 
 No further template implementation approval is pending. Future paid services remain outside this repository's current scope.
+
+## Shared hosted application and search setup
+
+The owner requested production accounts and Google sign-in, and clarified that SEO setup means Google Search Console. Google Cloud is used separately for the OAuth client required by Google sign-in. The hosted business and exported product share the same auth, billing, and dashboard source. Exports include the website with product configuration. The business remains a free template with paid services later; no live paid offer is introduced. Production credentials are excluded from previews.

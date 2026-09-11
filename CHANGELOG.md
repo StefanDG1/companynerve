@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- Export the website and application together using shared branding, auth, billing, and dashboard code.
+- Hide paid checkout until the backend billing configuration is complete.
+- Add canonical/structured metadata, preview noindex, Search Console and production launch guides, and two focused skills.
+- Keep Node type major upgrades aligned with the chosen runtime.
+
 - Select Cobalt workshop for CompanyNerve and identify it in the gallery. Keep all five recipes for exported products.
 - Upgrade to TypeScript 7.0.2, pnpm 12.3.4 and current compatible stable dependencies. See `docs/upgrading.md` for versions and compiler compatibility.
 

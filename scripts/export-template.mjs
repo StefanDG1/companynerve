@@ -49,6 +49,7 @@ function filter(path) {
   );
 }
 for (const path of [
+  "apps/marketing",
   "apps/starter",
   "convex",
   "packages",
@@ -77,25 +78,28 @@ for (const path of [
     cpSync(join(root, path), join(dest, path), { recursive: true, filter });
 const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
 pkg.name = name;
-pkg.scripts.build = "pnpm --filter @companynerve/starter build";
-delete pkg.scripts["dev:marketing"];
 writeFileSync(join(dest, "package.json"), JSON.stringify(pkg, null, 2) + "\n");
 cpSync(join(root, "pnpm-workspace.yaml"), join(dest, "pnpm-workspace.yaml"));
-const lock = readFileSync(join(root, "pnpm-lock.yaml"), "utf8").replace(
-  /\n  apps\/marketing:\n[\s\S]*?(?=\n  [^ \n][^\n]*:\n|\npackages:)/,
-  "",
-);
+const lock = readFileSync(join(root, "pnpm-lock.yaml"), "utf8");
 writeFileSync(join(dest, "pnpm-lock.yaml"), lock);
 writeFileSync(join(dest, "convex.json"), "{}\n");
 const config = join(dest, "packages/company-config/index.ts");
 let content = readFileSync(config, "utf8");
 content = content
-  .replace(/slug:\s*["']your-product["']/, `slug: "${name}"`)
-  .replaceAll("Your product", name);
+  .replace(/slug:\s*["'][a-z][a-z0-9-]+["']/, `slug: "${name}"`)
+  .replace('name: "CompanyNerve"', `name: "${name}"`)
+  .replace('kind: "template"', 'kind: "product"')
+  .replace(
+    "Accounts, shared workspaces, and projects built with the open-source CompanyNerve template.",
+    "A shared workspace for your team and its projects.",
+  )
+  .replaceAll("https://companynerve.com", "https://example.com")
+  .replaceAll("https://app.companynerve.com", "https://app.example.com")
+  .replaceAll("danistefangheorghiu@gmail.com", "owner@example.com");
 writeFileSync(config, content);
 writeFileSync(
   join(dest, "README.md"),
-  `# ${name}\n\nCreated from CompanyNerve ${pkg.version}.\n\nUse Node 24 and the pinned pnpm version. Run \`pnpm install --frozen-lockfile\`, follow [local setup](docs/local-development.md), then run \`pnpm dev\`.\n\nEdit \`packages/company-config/index.ts\` and pick your design recipe. No provider credentials or CompanyNerve marketing site are included.\n\nRun \`pnpm typecheck\`, \`pnpm test\`, and \`pnpm build\` before deployment.\n`,
+  `# ${name}\n\nCreated from CompanyNerve ${pkg.version}.\n\nUse Node 24 and the pinned pnpm version. Run \`pnpm install --frozen-lockfile\`, follow [local setup](docs/local-development.md), then run \`pnpm dev\` for the app or \`pnpm dev:marketing\` for the website.\n\nBoth applications share company configuration, design recipes, and UI. Auth, billing, and dashboard code are the same code used by CompanyNerve. No credentials or production data are included.\n\nEdit \`packages/company-config/index.ts\`, replace the example domains and support email, and choose your recipe. Review marketing copy and privacy disclosures for your product before publishing. Follow [launch operations](docs/operations/launch.md) for hosting, authentication, billing, and search setup.\n\nRun \`pnpm check\` before deployment.\n`,
 );
 writeFileSync(
   join(dest, "AGENTS.md"),

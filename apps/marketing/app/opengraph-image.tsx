@@ -1,5 +1,6 @@
 import { ImageResponse } from "next/og";
-export const alt = "CompanyNerve. A free foundation for your next SaaS.";
+import { company } from "@companynerve/company-config";
+export const alt = company.product.name;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 export default function Image() {
@@ -17,7 +18,7 @@ export default function Image() {
       }}
     >
       <div style={{ display: "flex", fontSize: 30, color: "#2456d8" }}>
-        CompanyNerve
+        {company.product.name}
       </div>
       <div
         style={{
@@ -27,10 +28,14 @@ export default function Image() {
           maxWidth: 950,
         }}
       >
-        A free foundation for your next SaaS.
+        {company.website.kind === "template"
+          ? "A free foundation for your next SaaS."
+          : "A workspace for work that matters."}
       </div>
       <div style={{ display: "flex", fontSize: 26 }}>
-        MIT licensed. Your own product.
+        {company.website.kind === "template"
+          ? "MIT licensed. Your own product."
+          : company.website.url}
       </div>
     </div>,
     size,

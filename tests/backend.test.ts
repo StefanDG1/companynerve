@@ -28,6 +28,52 @@ async function fixture() {
   return { t, alice, bob, aliceId, bobId, a, b };
 }
 describe("actual backend authorization and lifecycle", () => {
+  it("keeps unconfigured billing unavailable and rejects checkout before provider calls", async () => {
+    const keys = [
+      "STRIPE_SECRET_KEY",
+      "STRIPE_PRO_PRICE_ID",
+      "STRIPE_WEBHOOK_SECRET",
+      "STRIPE_MODE",
+    ] as const;
+    const previous = Object.fromEntries(
+      keys.map((key) => [key, process.env[key]]),
+    );
+    try {
+      for (const key of keys) delete process.env[key];
+      const { alice, a } = await fixture();
+      expect(
+        (await alice.query(api.billing.authorize, { organizationId: a }))
+          .configured,
+      ).toBe(false);
+      await expect(
+        alice.action(api.payments.checkout, { organizationId: a }),
+      ).rejects.toThrow("Subscriptions are not available");
+      process.env.STRIPE_MODE = "test";
+      process.env.STRIPE_SECRET_KEY = "sk_live_synthetic";
+      process.env.STRIPE_PRO_PRICE_ID = "price_synthetic";
+      process.env.STRIPE_WEBHOOK_SECRET = "whsec_synthetic";
+      expect(
+        (await alice.query(api.billing.authorize, { organizationId: a }))
+          .configured,
+      ).toBe(false);
+      process.env.STRIPE_SECRET_KEY = "sk_test_synthetic";
+      expect(
+        (await alice.query(api.billing.authorize, { organizationId: a }))
+          .configured,
+      ).toBe(true);
+      delete process.env.STRIPE_WEBHOOK_SECRET;
+      expect(
+        (await alice.query(api.billing.authorize, { organizationId: a }))
+          .configured,
+      ).toBe(false);
+    } finally {
+      for (const key of keys) {
+        if (previous[key] === undefined) delete process.env[key];
+        else process.env[key] = previous[key];
+      }
+    }
+  });
+
   it("denies anonymous and cross-organization reads, writes, exports and direct IDs", async () => {
     const { t, alice, bob, a, b } = await fixture();
     const id = await alice.mutation(api.projects.save, {

@@ -13,3 +13,7 @@ You selected Cobalt workshop for CompanyNerve. All five designs remain in the we
 Before real customers, finish any hosted verification listed as outstanding, choose your own support/legal contact details and retention policy, and decide whether the product needs live subscriptions. The template is not a paid CompanyNerve offering.
 
 Use the [plan](plan.md) to choose a separate product after reviewing the starter. Implementation, commits, pushes and browser verification were already approved; no new template phase approval is required.
+
+## Current account action
+
+Sign in to Namecheap to finish the app subdomain and Google Search Console TXT record. Production backend and identity-provider setup exist, but authenticated production verification and Search Console ownership remain pending. Google Cloud OAuth setup is separate from Search Console. See [launch operations](operations/launch.md).

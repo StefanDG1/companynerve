@@ -4,7 +4,7 @@
 
 The public marketing app is the Vercel project `companynerve-marketing`, rooted at `apps/marketing`, in the existing `stefandg1s-projects` team. The first successful deployment used commit `c28177a`. Git pushes to main trigger deployment. Marketing has no Convex, WorkOS or Stripe credentials. The existing Hobby plan was preserved; no unrelated project was removed.
 
-The starter runs locally on port 3001 against a dedicated CompanyNerve Convex development project and a CompanyNerve WorkOS staging project. Its Stripe product, recurring price, portal and webhook are sandbox-only and separate from existing products. Runtime values are held in ignored local environment files and Convex environment settings. No public hosted starter demo or live billing configuration is claimed.
+The local starter still uses dedicated development/staging services and Stripe sandbox resources. A separate production backend `gregarious-panda-197` and Vercel project `companynerve-app`, rooted at `apps/starter`, now exist. WorkOS production has email/password and Google enabled. Production application variables are scoped to Production only. The intended application domain is `app.companynerve.com`; its DNS and authenticated browser verification are pending. There is no live paid offering. See [launch operations](launch.md) and [status](../status.md) for the remaining checks.
 
 ## Domain record and rollback
 

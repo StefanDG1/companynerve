@@ -23,3 +23,7 @@ Root `.env.example` and `apps/starter/.env.example` contain placeholders. `pnpm 
 Use separate development, preview and production data. The public CompanyNerve marketing site has no access to starter credentials. Each exported product must provision its own services. Review [deployment](deployment.md) before production.
 
 The billing UI reads its mode from Convex. The backend rejects a Stripe key whose test/live prefix does not match STRIPE_MODE, before issuing a provider request.
+
+## Website configuration
+
+Marketing optionally accepts `NEXT_PUBLIC_SITE_URL` to override the configured canonical origin and `GOOGLE_SITE_VERIFICATION` for a Search Console URL-prefix HTML token. Domain properties use a DNS verification record instead. Neither value is an authentication credential. Vercel supplies `VERCEL_ENV`; Preview emits noindex and disallows crawlers. Configure production app values only in Production; provision separate services before enabling authenticated previews.

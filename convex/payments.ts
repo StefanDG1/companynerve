@@ -58,6 +58,8 @@ export const checkout = action({
   args: { organizationId: v.id("organizations") },
   handler: async (ctx, { organizationId }): Promise<string> => {
     const auth = await ctx.runQuery(api.billing.authorize, { organizationId });
+    if (!auth.configured)
+      throw new Error("Subscriptions are not available for this deployment.");
     await ctx.runMutation(internal.billing.throttle, { organizationId });
     const client = stripe();
     const price = process.env.STRIPE_PRO_PRICE_ID;

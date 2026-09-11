@@ -10,7 +10,7 @@ packages/company-config Validated brand, roles and plan limits
 packages/design-recipes Five presentation recipes and shared styles
 packages/ui             Small Radix/CVA, shadcn-compatible primitives
 docs                    Setup, operating instructions, decisions and evidence
-.agents/skills          Ten unchanged skill snapshots
+.agents/skills          Ten preserved snapshots plus SEO and launch guidance
 ```
 
 ## Request flow
@@ -27,6 +27,6 @@ Shared UI uses local source, native selects, and system fonts. The five recipes 
 
 ## Distribution
 
-`pnpm template:export -- --name my-product --out ../my-product` copies the starter, backend, packages, documentation, tests, skills, and a reproducible lockfile. It omits marketing, local environment values, Git history, build output, and provider metadata. The exported product needs its own provider projects.
+`pnpm template:export -- --name my-product --out ../my-product` copies both applications, backend, packages, documentation, tests, skills, and a reproducible lockfile. It selects the product landing page and replaces CompanyNerve domains with placeholders. It omits local environment values, Git history, build output, and provider metadata. The exported product needs its own provider projects.
 
 Founders own their copies. Updates are explicit diffs and migrations, never overwrites of customized applications. The version marker records the source release; see [upgrade guide](upgrading.md).

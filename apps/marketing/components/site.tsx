@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { company } from "@companynerve/company-config";
 import { Button } from "@companynerve/ui";
 import { recipes, getRecipe } from "@companynerve/design-recipes";
 import {
@@ -25,13 +26,20 @@ export function Header() {
     <header className="topbar">
       <Link href="/" className="wordmark">
         <Mark />
-        CompanyNerve
+        {company.product.name}
       </Link>
       <nav className="navlinks" aria-label="Main">
-        <Link href="/#included">The template</Link>
-        <Link href="/designs">Design options</Link>
-        <Link href="/docs">Documentation</Link>
-        <a href={repository}>GitHub</a>
+        <Link href="/#included">
+          {company.website.kind === "template" ? "The template" : "The product"}
+        </Link>
+        {company.website.kind === "template" && (
+          <>
+            <Link href="/designs">Design options</Link>
+            <Link href="/docs">Documentation</Link>
+            <a href={repository}>GitHub</a>
+          </>
+        )}
+        <a href={company.website.appUrl + "/sign-in"}>Sign in</a>
       </nav>
     </header>
   );
@@ -39,11 +47,21 @@ export function Header() {
 export function Footer() {
   return (
     <footer className="footer">
-      <p>CompanyNerve. A foundation for your next product.</p>
+      <p>
+        {company.product.name}
+        {company.website.kind === "template"
+          ? ". A foundation for your next product."
+          : ""}
+      </p>
       <div className="navlinks">
-        <Link href="/docs">Docs</Link>
-        <a href={repository + "/blob/main/LICENSE"}>MIT license</a>
+        {company.website.kind === "template" && <Link href="/docs">Docs</Link>}
+        <a href={repository + "/blob/main/LICENSE"}>
+          {company.website.kind === "template"
+            ? "MIT license"
+            : "Template source license"}
+        </a>
         <Link href="/privacy">Privacy</Link>
+        <a href={"mailto:" + company.website.supportEmail}>Contact</a>
       </div>
     </footer>
   );
@@ -166,6 +184,11 @@ export function Landing({
               </p>
               <div className="actions">
                 <Button asChild>
+                  <a href={company.website.appUrl + "/sign-up"}>
+                    Create a free account
+                  </a>
+                </Button>
+                <Button variant="outline" asChild>
                   <a href={repository}>Explore the free template</a>
                 </Button>
                 <Button variant="outline" asChild>

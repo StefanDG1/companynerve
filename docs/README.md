@@ -22,3 +22,5 @@ Start with [decisions](decisions.md), then [status](status.md). Start with [loca
 | [Future products](future-products.md)                      | Separate repositories and integration acceptance           |
 | [Skill maintenance](skills.md)                             | Bundled skills, portability, provenance, and updates       |
 | [Founder handoff](founder-handoff.md)                      | Review implementation and remaining owner decisions        |
+
+For a hosted product, use [launch operations](operations/launch.md), [Google Search Console](operations/search.md), and [reuse and skill choices](research/reuse-and-skills.md).

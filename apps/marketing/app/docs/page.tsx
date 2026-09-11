@@ -1,5 +1,8 @@
 import { Header, Footer, repository } from "@/components/site";
-export const metadata = { title: "Setup and documentation" };
+export const metadata = {
+  title: "Setup and documentation",
+  alternates: { canonical: "/docs" },
+};
 export default function Page() {
   return (
     <div className="container">
@@ -42,9 +45,9 @@ pnpm install`}</code>
           </code>
         </pre>
         <p>
-          The export omits CompanyNerve's marketing site and all local
-          environment values. Edit your company configuration, select a recipe,
-          and follow the setup guide in the new directory.
+          The export includes the marketing site, application, and backend, but
+          omits all local environment values. Edit your company configuration,
+          select a recipe, and follow the setup guide in the new directory.
         </p>
         <h2>Understand the boundaries</h2>
         <ul>

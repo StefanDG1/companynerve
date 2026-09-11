@@ -1,5 +1,8 @@
 import { Header, Footer, RecipeGallery } from "@/components/site";
-export const metadata = { title: "Five design directions" };
+export const metadata = {
+  title: "Five design directions",
+  alternates: { canonical: "/designs" },
+};
 export default function Page() {
   return (
     <div className="container">

@@ -20,8 +20,8 @@ export default async function Page({
     <>
       <h1>Billing</h1>
       <p className="muted">
-        This is your product's example subscription flow. CompanyNerve's
-        template is free.
+        Manage this workspace's plan. Account and organization data exports stay
+        free.
       </p>
       <div className="stack">
         <Card>
@@ -34,22 +34,28 @@ export default async function Page({
             projects per workspace.{" "}
             {paid
               ? "The project report is available."
-              : "Upgrade to enable the project report and a higher project limit."}
+              : data.configured
+                ? "Upgrade to enable the project report and a higher project limit."
+                : "No paid subscription is offered on this deployment."}
           </p>
-          <p className="muted">
-            {data.mode === "live"
-              ? "Live billing is enabled for this product."
-              : "Test billing. No real payment is required."}{" "}
-            Price and currency appear on the provider's checkout page.
-          </p>
-          <ActionForm
-            action={startCheckout}
-            label={paid ? "Manage subscription" : "Open checkout"}
-          >
-            <input type="hidden" name="organizationId" value={org} />
-          </ActionForm>
+          {data.configured && (
+            <>
+              <p className="muted">
+                {data.mode === "live"
+                  ? "Live billing is enabled for this product."
+                  : "Test billing. No real payment is required."}{" "}
+                Price and currency appear on the provider's checkout page.
+              </p>
+              <ActionForm
+                action={startCheckout}
+                label={paid ? "Manage subscription" : "Open checkout"}
+              >
+                <input type="hidden" name="organizationId" value={org} />
+              </ActionForm>
+            </>
+          )}
         </Card>
-        {data.billing && (
+        {data.configured && data.billing && (
           <Card>
             <h2>Manage and refresh</h2>
             <p className="muted">
@@ -67,16 +73,19 @@ export default async function Page({
             </div>
           </Card>
         )}
-        <Card>
-          <h2>Example Pro report</h2>
-          <p className="muted">
-            A server-protected project report demonstrates how to enforce a paid
-            feature. Basic account and organization data exports stay free.
-          </p>
-          <Button variant="outline" asChild>
-            <a href={`/app/${org}/report`}>Download Pro report</a>
-          </Button>
-        </Card>
+        {(data.configured || paid) && (
+          <Card>
+            <h2>Example Pro report</h2>
+            <p className="muted">
+              A server-protected project report demonstrates how to enforce a
+              paid feature. Basic account and organization data exports stay
+              free.
+            </p>
+            <Button variant="outline" asChild>
+              <a href={`/app/${org}/report`}>Download Pro report</a>
+            </Button>
+          </Card>
+        )}
       </div>
     </>
   );

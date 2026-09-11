@@ -20,7 +20,7 @@ Read `docs/status.md` and the newest explicit owner instructions before working.
 
 ## Local skills
 
-Use the skill that fits the work; do not load all ten for each edit. Paths are repository-relative and work without the founder's global skill directory.
+Use the skill that fits the work; do not load every skill for each edit. Paths are repository-relative and work without the founder's global skill directory.
 
 | Work                                    | Read                                                               |
 | --------------------------------------- | ------------------------------------------------------------------ |
@@ -36,6 +36,8 @@ Use the skill that fits the work; do not load all ten for each edit. Paths are r
 | All authored prose                      | `.agents/skills/unslop/SKILL.md`                                   |
 
 Local scope and explicit user decisions govern how these copied instructions apply. Tool names in upstream skills may need an equivalent available tool. Never pretend a missing tool ran. Browser Harness needs a separate installation and browser connection; it is not bundled here. See `docs/skills.md`.
+
+Additional routing: use `.agents/skills/companynerve-launch/SKILL.md` for launch/provider configuration and `.agents/skills/seo-audit/SKILL.md` for SEO review. Current owner authorization includes production authentication and Search Console setup; it does not create a recurring operations mandate.
 
 ## Verification and handoff
 

@@ -31,7 +31,7 @@ Run `pnpm typecheck`, `pnpm test`, and `pnpm build`. The nine backend tests use 
 
 ## Create a new product
 
-Run `pnpm template:export -- --name my-product --out ../my-product`. The output path must not exist and must be outside the source repository. The export preserves source, docs, skills, tests, and a lockfile, but omits marketing, secrets, and local provider configuration.
+Run `pnpm template:export -- --name my-product --out ../my-product`. The output path must not exist and must be outside the source repository. The export preserves source, docs, skills, tests, and a lockfile, including the marketing app, but omits secrets and local provider configuration. Set website/app domains and support email in company configuration before publishing. Follow [launch operations](operations/launch.md) for the hosted setup.
 
 Run a fresh install and build from the exported directory. Change `packages/company-config/index.ts`, then provision your own provider projects. Do not reuse CompanyNerve's environment values or accounts.
 

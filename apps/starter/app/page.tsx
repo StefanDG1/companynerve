@@ -8,12 +8,9 @@ export default function Page() {
       <Header />
       <main id="main" className="hero">
         <div>
-          <p className="intro">Your next product starts here</p>
+          <p className="intro">{company.product.name}</p>
           <h1>A workspace for work that matters.</h1>
-          <p>
-            {company.product.description} Replace this introduction with the
-            problem you solve for your customers.
-          </p>
+          <p>{company.product.description}</p>
           <div className="actions">
             <Button asChild>
               <Link href="/sign-up">Create an account</Link>
@@ -23,7 +20,9 @@ export default function Page() {
             </Button>
           </div>
           <p className="muted" style={{ fontSize: ".8rem", marginTop: 20 }}>
-            Example application built from CompanyNerve.
+            <a href={company.website.url}>About {company.product.name}</a>
+            {" · "}
+            <a href={company.website.url + "/privacy"}>Privacy</a>
           </p>
         </div>
         <div className="card">

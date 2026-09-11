@@ -29,3 +29,7 @@ Names are proposals, not availability checks or reserved brands. Each product ow
 Do not move a whole product into the template or require it for starter signup. Mark unsupported checks as unsupported. Add paid-service billing only after the product and commercial terms exist.
 
 Kinetexa, Vydero, and potentially Exponential Education are later adoption candidates, not projects to modify while preparing this template.
+
+## Keep account and billing ownership explicit
+
+A new product starts from an export with its own provider projects, database, domains, and customer relationships. Reuse the template implementation, not CompanyNerve production credentials or memberships. If cross-product accounts or subscriptions become a real requirement, define issuer/audience, organization mapping, consent, revocation, data deletion, and entitlement ownership before adding an integration. No implicit single sign-on or shared paid access exists today. Product-specific landing pages and dashboards can evolve independently while preserving backend membership checks.

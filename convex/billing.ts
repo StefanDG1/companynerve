@@ -9,6 +9,14 @@ export const authorize = query({
       name: a.organization.name,
       email: a.actor.email,
       mode: process.env.STRIPE_MODE === "live" ? "live" : "test",
+      configured: Boolean(
+        process.env.STRIPE_PRO_PRICE_ID &&
+        process.env.STRIPE_WEBHOOK_SECRET &&
+        new RegExp(`^[sr]k_${process.env.STRIPE_MODE ?? "test"}_`).test(
+          process.env.STRIPE_SECRET_KEY ?? "",
+        ) &&
+        ["test", "live"].includes(process.env.STRIPE_MODE ?? "test"),
+      ),
       billing: await billingFor(ctx, organizationId),
     };
   },

@@ -37,7 +37,7 @@ CI and marketing deployment results are recorded per commit in GitHub checks and
 
 ## Deliberate alpha limits
 
-- The starter is verified locally against hosted development/staging services. There is no public hosted starter demo, production starter database, or live payment offering.
+- A separate production backend and hosted starter deployment now exist. Custom-domain DNS and full authenticated production browser verification remain pending. There is no live payment offering.
 - Membership invitations are shareable links, not delivered emails. WorkOS owns identity; no WorkOS SSO organization synchronization is included.
 - Cobalt workshop is selected; further visual polish remains possible. Comprehensive accessibility certification, field performance metrics and every browser/recipe/state permutation are not claimed.
 - Backup/restore rehearsal, provider-outage drills, production monitoring, live tax setup and a product-specific retention/legal/support policy remain before real customers. Failed identity deletion jobs require an operator after five retries.
@@ -45,3 +45,19 @@ CI and marketing deployment results are recorded per commit in GitHub checks and
 - Future services and standalone products remain separate work. No existing hosting plan or unrelated product was changed.
 
 See [the deployment runbook](operations/deployment.md), [acceptance checklist](acceptance.md), and [next steps](plan.md). A template release does not certify a founder's subsequent deployment.
+
+## Production setup in progress
+
+On 2026-09-11, the production Convex backend deployed, and Vercel created the separate `companynerve-app` deployment from the existing source. Production WorkOS has email/password and a dedicated Google OAuth client enabled. The Google OAuth audience is published. Six app environment values are scoped to Production, with the public URLs stored as configuration and credentials stored as secrets.
+
+Pending: Namecheap login to add the app CNAME and Search Console verification TXT, followed by domain/HTTPS checks, Search Console verification and sitemap submission, and complete authenticated production browser verification. Google OAuth configuration is not evidence that a user completed Google sign-in. PR #2 was closed as an unnecessary Node type major upgrade; runtime-aligned dependency policy is being committed. No hosting plan changed.
+
+Source work adds shared product website export, configuration-driven branding, optional-billing availability, SEO metadata, and launch/SEO skills. Validation and deployment of these source changes are recorded separately after checks run.
+
+### Checks for the shared website export
+
+`pnpm check` passed document/skill validation, workspace type checks, all 10 focused backend tests, and both production builds. A fresh export installed with the frozen lockfile and built both applications without credentials. Browser inspection confirmed exported product branding, placeholder-only links, canonical URL, WebSite JSON-LD, and no horizontal overflow at desktop and 390 pixels. A subsequent footer wording change distinguishes the template source license from a future product license.
+
+The updated Convex production functions deployed successfully. Its health route returned 200, an unsigned Stripe webhook returned 400, and an unauthenticated identity action returned an error. No authenticated production journey is claimed. The working source passed a scan against the actual configured secret values. GitHub reported no open pull requests.
+
+The website/application source changes are prepared on `production-launch` while DNS access is pending. They are not yet promoted to the public marketing site, so the live homepage does not advertise signup on an unresolved app domain.
