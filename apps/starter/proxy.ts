@@ -4,7 +4,12 @@ import {
   type NextRequest,
   type NextFetchEvent,
 } from "next/server";
-const auth = authkitProxy();
+const auth = authkitProxy({
+  middlewareAuth: {
+    enabled: true,
+    unauthenticatedPaths: ["/sign-in", "/sign-up", "/callback"],
+  },
+});
 export default function proxy(request: NextRequest, event: NextFetchEvent) {
   if (
     !process.env.WORKOS_CLIENT_ID ||
