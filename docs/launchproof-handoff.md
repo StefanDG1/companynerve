@@ -55,3 +55,11 @@ The mapping covers one target organization per starter deployment. Each request 
 The summary is a customer-run claim. It does not certify a deployment, independently verify identity, or establish execution time. The latest retained upload can be for a different target environment or become older after deletion. See [contract and limits](launchproof-contract.md) and [setup](operations/launchproof.md).
 
 Main can review these CompanyNerve changes, then configure an explicitly approved synthetic staging mapping with a `reports:read-summary` token. Keep all target JWTs local or in customer CI. Do not expose the private LaunchProof repository or its documents through the public template.
+
+## Main release verification, 12 September 2026
+
+Integration revision dbeac55df7ab0238abda2d161370ce4976b40efb passed all 30 tests, typechecks, both builds and GitHub CI 34691605399. Vercel application deployment dpl_GFD4mfoqFCt6PWmSyFHWbApnqyid and marketing deployment dpl_FqQZDv8nrr47PE88miFCdWddqPNg reached READY with the expected production aliases.
+
+The copied adapter 0.1.1 read an actual runner 0.1.1 report through the local LaunchProof production Next build and real staging backends. Its membership callback queried CompanyNerve staging before and after retrieval. The report contained three passing scoped checks. Missing commit/deployment identity remained comparison_unsupported. A summary-only token received 403 for the full report; after revocation the adapter returned unavailable. This was an explicit disposable staging mapping, not a permanent production connection. All created staging organizations, identities and sandbox subscriptions/customers were cleaned up. Production integration remains optional and default-off.
+
+The pre-existing uncommitted docs/status.md remains unchanged. This publication note supersedes the worker's earlier not-deployed status above.
