@@ -37,3 +37,9 @@ Record these checks separately for each environment after an operator applies th
 - Anonymous and cross-workspace requests remain rejected by the backend. Run the focused synthetic tests in [acceptance](../acceptance.md); a provider identity alone never grants workspace permissions.
 
 Source implementation, local tests, deployment, saved provider settings, and completed browser journeys are separate evidence. Record the actual results in [status](../status.md); repository changes alone do not confirm provider setup.
+
+## Private page redirects
+
+AuthKit proxy authentication is enabled for protected matcher paths. Sign-in, sign-up and callback paths remain explicitly unauthenticated so their route handlers can complete the flow. Server Components read withAuth without ensureSignedIn, and redirect a missing session to the local sign-in handler. This keeps PKCE cookie writes out of page rendering, where Next.js prohibits them. The backend still authorizes every operation independently.
+
+The correction at bb04d356b4ce6ae60716bcf675bb92b693423181 passed 40 tests and GitHub CI 34692292924. Vercel application deployment dpl_FBwDzBSWPxEjbR6RqkHYAuSc95Vx is READY. Anonymous production account requests redirect to this application's own WorkOS client with HttpOnly PKCE cookies. Tests include invalid sessions, callback pass-through, prefetch handling and a server-render fallback.

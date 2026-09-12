@@ -35,8 +35,14 @@ pnpm template:export -- --name my-product --out ../my-product
 
 Read the [current verification status](docs/status.md) before deploying with real customers. Provider configuration is separate from passing local checks. See the [documentation index](docs/README.md).
 
+## Check access before launch
+
+[Try LaunchProof's free local demo](https://launch.companynerve.com/docs). Its current CompanyNerve adapter checks anonymous private-project access, cross-workspace reads, and a declared paid feature. Local checks need no LaunchProof account; testing your own app requires compatible Convex project functions and authorized staging fixtures. Target credentials stay on your machine.
+
+The [optional dashboard integration](docs/operations/launchproof.md) displays a scoped report summary. It defaults off and keeps your application's customers independent from CompanyNerve hosted-service accounts.
+
 ## Repository boundaries
 
-CompanyNerve's marketing site and starter live here. Future products such as LaunchProof and AccessProof get their own repositories, deployments, and designs. Only released, verified integrations are added to this template. See [future products](docs/future-products.md).
+CompanyNerve's marketing site and starter live here. LaunchProof has its own repository, deployment, and backend. Future products such as AccessProof follow the same separation. Only released, verified integrations are added to this template. See [future products](docs/future-products.md).
 
 Read [CONTRIBUTING.md](CONTRIBUTING.md), [AGENTS.md](AGENTS.md), and [SECURITY.md](SECURITY.md) before making changes. Licensing status is in [LICENSE.md](LICENSE.md); bundled skill notices are in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
