@@ -30,6 +30,10 @@ Each generated app owns its WorkOS client/environment, Google Cloud OAuth client
 
 The billing UI reads its mode from Convex. The backend rejects a Stripe key whose test/live prefix does not match STRIPE_MODE, before issuing a provider request.
 
+## Optional LaunchProof summary
+
+Only the starter server reads `LP_INTEGRATION_*` variables. The integration defaults off and needs no account or credentials for exports or builds. The complete placeholder inventory and connect/disconnect procedure are in [LaunchProof setup](launchproof.md). Never expose `LP_INTEGRATION_SUMMARY_TOKEN` through a public environment variable or company configuration. The two `CURRENT_*` identity fields identify the target backend exercised by checks, not automatically the frontend build.
+
 ## Website configuration
 
 The optional `website.operator` object in company configuration supplies the legal name, registered address, CUI, Trade Register number, and EUID for the legal notice. CompanyNerve uses company-published facts from exponentialeducation.ro privacy/terms plus the reused Stripe profile postcode, without independent registry validation. Exports remove the object and replace the support email with `owner@example.com`. These are public facts, not provider credentials. A generated product must supply its own legal identity and policies before publishing.

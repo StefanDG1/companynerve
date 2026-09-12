@@ -1,5 +1,7 @@
 # CompanyNerve documentation
 
+For optional launch summaries, see [LaunchProof setup](operations/launchproof.md), [contract and limits](launchproof-contract.md), and the separate [integration handoff](launchproof-handoff.md).
+
 Start with [decisions](decisions.md), then [status](status.md). Start with [local setup](local-development.md) to use the starter.
 
 | Document                                                   | Purpose                                                    |

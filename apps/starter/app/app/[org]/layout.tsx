@@ -29,6 +29,9 @@ export default async function Layout({
               <Link href={"/app/" + org + "/team"}>Team</Link>
               <Link href={"/app/" + org + "/settings"}>Settings</Link>
               <Link href={"/app/" + org + "/audit"}>Activity</Link>
+              <Link href={"/app/" + org + "/launch-checks"}>
+                Launch checks setup
+              </Link>
             </>
           )}
           {info.role === "owner" && (

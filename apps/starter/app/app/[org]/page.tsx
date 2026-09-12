@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { Suspense } from "react";
+import { LaunchChecks } from "@/components/launch-checks";
 import { backend, api } from "@/lib/backend";
 import type { Id } from "../../../../../convex/_generated/dataModel";
 import { Button, Badge } from "@companynerve/ui";
@@ -61,6 +63,9 @@ export default async function Page({
           </p>
         </section>
       )}
+      <Suspense fallback={null}>
+        <LaunchChecks organizationId={org} />
+      </Suspense>
       <p className="muted" style={{ fontSize: ".8rem", marginTop: 26 }}>
         This example shows where your own product logic belongs.
       </p>

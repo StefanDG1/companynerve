@@ -27,6 +27,7 @@ it("exports credential placeholders without local identity configuration and ref
       "scripts",
       "apps/starter/.vercel",
       "packages/company-config",
+      "packages/launchproof-integration",
     ])
       mkdirSync(join(source, dir), { recursive: true });
     for (const path of [
@@ -35,6 +36,8 @@ it("exports credential placeholders without local identity configuration and ref
       "pnpm-workspace.yaml",
       "pnpm-lock.yaml",
       "packages/company-config/index.ts",
+      "packages/launchproof-integration/server.ts",
+      "packages/launchproof-integration/contract.ts",
       ".env.example",
       "apps/starter/.env.example",
     ])
@@ -42,7 +45,7 @@ it("exports credential placeholders without local identity configuration and ref
     put(".env.local", "WORKOS_API_KEY=synthetic-root-secret\n");
     put(
       "apps/starter/.env.local",
-      "WORKOS_COOKIE_PASSWORD=synthetic-session-secret\n",
+      "WORKOS_COOKIE_PASSWORD=synthetic-session-secret\nLP_INTEGRATION_ENABLED=true\nLP_INTEGRATION_SUMMARY_TOKEN=synthetic-lp-secret\nLP_INTEGRATION_APPLICATION_ID=private-reporting-app\n",
     );
     put(
       "apps/starter/.env.production",
@@ -76,6 +79,30 @@ it("exports credential placeholders without local identity configuration and ref
       expect(credentials.length).toBeGreaterThan(0);
       expect(credentials.every((line) => line.endsWith("="))).toBe(true);
     }
+    const launchEnv = readFileSync(
+      join(output, "apps/starter/.env.example"),
+      "utf8",
+    );
+    expect(launchEnv).toMatch(/^LP_INTEGRATION_ENABLED=false$/m);
+    expect(launchEnv).toMatch(/^LP_INTEGRATION_SUMMARY_TOKEN=$/m);
+    expect(launchEnv).toMatch(/^LP_INTEGRATION_TARGET_ORGANIZATION_ID=$/m);
+    expect(launchEnv).toMatch(/^LP_INTEGRATION_APPLICATION_ID=$/m);
+    // Exercise the exported code in a fresh process with no provider configuration.
+    const disabled = execFileSync(
+      process.execPath,
+      [
+        "--input-type=module",
+        "--eval",
+        `
+      import { createLaunchProofIntegration, integrationConfigFromEnv } from './packages/launchproof-integration/server.ts';
+      globalThis.fetch = () => { throw new Error('disabled export fetched'); };
+      const integration = createLaunchProofIntegration(integrationConfigFromEnv({}), () => { throw new Error('disabled export authorized'); });
+      process.stdout.write(JSON.stringify(await integration.read({ organizationId: 'new_org' })));
+    `,
+      ],
+      { cwd: output, encoding: "utf8" },
+    );
+    expect(JSON.parse(disabled)).toEqual({ state: "disabled" });
     const config = readFileSync(
       join(output, "packages/company-config/index.ts"),
       "utf8",
